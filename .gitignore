@@ -1,0 +1,10 @@
+/.idea
+/node_modules
+
+# subtitles used for testing
+/test_material
+
+# vlc player
+/plugins
+/*.dll
+/*.dll.manifest

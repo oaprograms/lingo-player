@@ -1,0 +1,87 @@
+<div class="panel dialog" style="width: calc(100% - 40px); height: calc(100% - 30px); max-width: 1000px;">
+    <div class="mmmr mmt pull-right">
+        <a href ng-click="data.dialog = null">
+            Close
+        </a>
+    </div>
+    <div class="subs-dialog-left-div">
+        <div style="direction:ltr" ng-include="'partials/dictionary.html'"></div>
+    </div>
+    <div class="subs-dialog-right-div">
+        <div class="mmmr mmb" style="display: inline-block">
+            <span class="mr">Language:</span>
+            <ui-select ng-model="data.languagePair" theme="select2" style="width: 180px; display: inline-block;"
+                       ng-change="loadWords()" search-enabled="false">
+                <ui-select-match placeholder="Search...">{{data.languages[$select.selected.lang1] + ' - ' + data.languages[$select.selected.lang2]}}</ui-select-match>
+                <ui-select-choices repeat="langPair in data.languagePairs | filter: $select.search">
+                    <div ng-bind-html="data.languages[langPair.lang1] + ' - ' + data.languages[langPair.lang2] | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="mmmr mmb" style="display: inline-block">
+            <span class="mr">Sort:</span>
+            <ui-select ng-model="data.wordSort" theme="select2" style="width: 110px; display: inline-block;"
+                       ng-change="loadWords()" search-enabled="false">
+                <ui-select-match placeholder="Search...">{{ $select.selected }}</ui-select-match>
+                <ui-select-choices repeat="sort in data.wordSortOptions | filter: $select.search">
+                    <div ng-bind-html="sort | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="clearfix"></div>
+        <div class="mmt mmb">
+            <div ng-repeat="level in data.levels" class="level-selector pointer no-select mt"
+                 style="background-color: {{ level.colorLight }};" title="Show {{ level.label.toLowerCase() }} words"
+                 ng-class="{'level-unchecked': ! data.showLevels[level.value]}"
+                 ng-click="data.showLevels[level.value] = ! data.showLevels[level.value]; loadWords()">
+                <span></span>
+                <span style="margin: 2px 10px;" class="pull-right">{{ level.label }} ({{data.levelCounts[level.value] }})</span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <table class="words-table">
+            <tr ng-repeat="word in data.words" class="word-row">
+                <td ng-mouseenter="define(word, data.languagePair.lang1, data.languagePair.lang2)">
+
+                    <div class="word-level inline-block mr no-select" style="position: relative; width: 75px; height: 18px; ">
+                        <div class="level-picker word-level-indicator" style="position: absolute; right:0; width: 11px; height: 11px; margin-top: 2px; background-color: {{ data.levels[word.level - 1].colorLight }};"></div>
+                        <div class="word-level-change" style="position: absolute; right: 0; cursor: pointer">
+                            <div ng-repeat="level in data.levels" class="level-picker"
+                                 ng-class="{'bordered': word.level == level.value}"
+                                 style="background-color: {{ level.colorLight }};" title="Set level"
+                                 ng-click="word.level = level.value; saveWord(word, level.value, data.languagePair.lang1, data.languagePair.lang2); loadWords()"></div>
+                        </div>
+                    </div>
+                    <span class="mml pointer">
+                        {{word.text}}
+                    </span>
+                    <span class="icon-volume actions mml no-select" ng-click="playWord()" title="Listen"></span>
+                    <span class="actions mmmr mml no-select pull-right"
+                          ng-click="removeWord(word, data.languagePair.lang1, data.languagePair.lang2);loadWords()">
+                        remove
+                    </span>
+
+                </td>
+            </tr>
+            <tr><td> </td></tr>
+            <tr><td> </td></tr>
+            <tr><td> </td></tr>
+
+            <tr class="add-word">
+                <td>
+                    <input type="text" style="border: 1px solid #b2b2b2; width: calc(100% - 55px);"
+                           ng-model="data.newManualWord.text"
+                           ng-mouseenter="define(data.newManualWord, data.languagePair.lang1, data.languagePair.lang2)"
+                           ng-change    ="define(data.newManualWord, data.languagePair.lang1, data.languagePair.lang2)"
+                           placeholder="Add word or phrase" />
+                    <button class="btn" style="width: 50px;"
+                            ng-click="saveWord(data.newManualWord, 1, data.languagePair.lang1, data.languagePair.lang2); data.newManualWord.text = ''; loadWords(); ">
+                        Add
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,119 @@
+<div class="panel panel-default file-dialog dialog" style="width: 580px; height: 435px;">
+    <div class="panel-heading">
+        Choose File
+        <a href class="pull-right" ng-click="data.dialog = null">
+            Close
+        </a>
+    </div>
+    <div class="panel-body" style="padding-left: 0">
+        <div class="clearfix"></div>
+
+
+        <div class="mmmb mt mml">
+            <div class="pull-right mmmmr">
+                <label class="mml">You are learning: </label><br/>
+                <ui-select ng-model="data.lang1" ng-change="updateRecentData(); hidePopover()" theme="select2" class="langsel"
+                           uib-popover="Language of video file and main subtitles"
+                           popover-placement="top" popover-trigger="mouseenter" popover-append-to-body="true">
+                    <ui-select-match placeholder="Search...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="lang.code as lang in data.languageList | filter: $select.search">
+                        <div ng-bind-html="lang.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="pull-right mmmmr">
+                <label class="mml">You speak: </label><br/>
+                <ui-select ng-model="data.lang2"  ng-change="updateRecentData(); hidePopover()" theme="select2" class="langsel"
+                           uib-popover="Choose a language you speak and understand, to be used for Google Translate"
+                           popover-placement="top" popover-trigger="mouseenter" popover-append-to-body="true">
+                    <ui-select-match placeholder="Search...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="lang.code as lang in data.languageList | filter: $select.search">
+                        <div ng-bind-html="lang.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="pull-left" style="width: 50%">
+            <div class="recent-files">
+                <div class="mmb">
+                    <b>Recent files: </b>
+                    <span class="pointer mmml dim-button" ng-click="data.recentFiles=[]" ng-show="data.recentFiles.length">Clear</span>
+                </div>
+
+                <div class="text-muted" ng-hide="data.recentFiles.length">None</div>
+                <div ng-repeat="recent in data.recentFiles track by $index"
+                     class="item-list pointer" >
+                    <a ng-click="getRecent(recent); initPlayback()" title="{{ recent.movie }}" >
+                        {{ getFileName(recent.movie) }}
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="pull-left" style="width: 50%">
+            <table class="file-table">
+                <tr>
+                    <td>
+                        <div class="file-field-label"><b>Video file: </b></div>
+                        <div class="input-group">
+                            <input type="text" placeholder="(none)"
+                                   ng-model="data.paths.movie" ng-change="reloadMovie()" class="file-text-input" />
+
+                            <span class="input-group-btn">
+
+                                <button class="btn btn-sm btn-success" ng-click="chooseFile('movie')"> Open... </button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="file-field-label">
+                            <b>{{ data.languages[data.lang1] }} subtitles: </b>
+                            <span class="pointer mml dim-button" ng-click="data.paths.sub1 = ''; updateRecentData()">Clear</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" placeholder="(none)"
+                                   ng-model="data.paths.sub1" ng-change="updateRecentData(); reloadSubs()" class="file-text-input" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-success" ng-click="chooseFile('sub1')"> Open... </button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="file-field-label">
+                            {{ data.languages[data.lang2] }} subtitles (optional):
+                            <span class="pointer mml dim-button" ng-click="data.paths.sub2 = ''; updateRecentData()">Clear</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" placeholder="(none)"
+                                   ng-model="data.paths.sub2" ng-change="updateRecentData(); reloadSubs()" class="file-text-input" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-success" ng-click="chooseFile('sub2')"> Open... </button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="text-center">
+            <span ng-class="{'green':data.subtitles.match>0.5, 'red':data.subtitles.match<=0.5}"
+                  ng-show="data.subtitles.match" style="margin-right: 20px;">
+                Subtitles match: {{ data.subtitles.match | percentage:0 }}
+            </span>
+            <button class="btn btn-success btn-lg" ng-click="initPlayback()" style="padding: 10px 30px;">
+                <i class="icon-play"></i> Play
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="panel dialog" style="width: calc(100% - 40px); height: calc(100% - 30px); max-width: 1000px;">
+    <div class="loading" ng-if="data.subsDialogLoading">Loading...</div>
+    <div ng-if="! data.subsDialogLoading">
+        <div class="mmmr mmt pull-right">
+            <a href ng-click="data.dialog = null">
+                Close
+            </a>
+        </div>
+        <div class="subs-dialog-left-div">
+            <div style="direction:ltr" ng-include="'partials/dictionary.html'"></div>
+        </div>
+        <div class="subs-dialog-right-div">
+            <div ng-if="data.subtitles.pairs.length">
+                <table class="subs-table">
+                    <tbody style="vertical-align: top;">
+                        <tr ng-repeat = "s in data.subtitles.pairs">
+                            <td>
+                                <div ng-if="s[0].subtitle.subsDialogLoaded">
+                                    <span ng-repeat="word in s[0].subtitle.words"><span style="border-bottom-width: 1px;" ng-if="word.isWord" class="pointer level{{word.level}}"
+                                          title="{{ data.wordDefinition.translation }} "
+                                          ng-mouseenter="define(word, data.lang1, data.lang2);"
+                                          ng-mousedown="changeWordLevel(word, $event.button != 0); highlightWords(s[0].subtitle)">{{ word.text }}</span><span ng-if="! word.isWord">{{ word.text }}</span></span>
+
+                                </div>
+                                <!--Speed up rendering by showing plain text version until mouseenter-->
+                                <div ng-mouseenter="s[0].subtitle.subsDialogLoaded = true; highlightWords(s[0].subtitle)" ng-if="! s[0].subtitle.subsDialogLoaded">
+                                    {{ s[0].subtitle.text }}
+                                </div>
+                            </td>
+
+                            <td style="color: rgb(119,119,119);">
+                                <div ng-if="s[1].subtitle.subsDialogLoaded">
+                                    <span ng-repeat="word in s[1].subtitle.words"><span ng-if="word.isWord" class="pointer"
+                                   ng-mouseenter="define(word, data.lang2, data.lang1);"
+                                   title="{{ data.wordDefinition.translation }}"
+                                    >{{ word.text }}</span><span
+                                    ng-if="! word.isWord">{{ word.text }}</span></span>
+                                </div>
+                                <!--Speed up rendering by showing plain text version until mouseenter-->
+                                <div ng-mouseenter="s[1].subtitle.subsDialogLoaded = true" ng-if="! s[1].subtitle.subsDialogLoaded">
+                                    {{ s[1].subtitle.text }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="! data.subtitles.pairs.length">
+                <table class="subs-table">
+                    <tbody style="vertical-align: top;">
+                    <tr ng-repeat = "s in data.subtitles.sub1.data">
+                        <td>
+                            <div ng-if="s.subtitle.subsDialogLoaded">
+                                    <span ng-repeat="word in s.subtitle.words"><span
+                                            style="border-bottom-width: 1px;" ng-if="word.isWord" class="pointer level{{word.level}}"
+                                            title="{{ data.wordDefinition.translation }}"
+
+                                            ng-mouseenter="define(word, data.lang1, data.lang2);"
+                                            ng-mousedown="changeWordLevel(word, $event.button != 0); highlightWords(s.subtitle)">{{ word.text }}</span><span ng-if="! word.isWord">{{ word.text }}</span></span>
+
+                            </div>
+                            <!--Speed up rendering by showing plain text version until mouseenter-->
+                            <div ng-mouseenter="s.subtitle.subsDialogLoaded = true; highlightWords(s.subtitle)" ng-if="! s.subtitle.subsDialogLoaded">
+                                {{ s.subtitle.text }}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

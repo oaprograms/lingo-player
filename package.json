@@ -1,0 +1,33 @@
+{
+  "main": "app://host/app/index.html",
+  "name": "lingo-player",
+  "version": "0.0.1",
+  "license" : "MIT",
+  "author": "Ognjen Apic <ognjen.apic@gmail.com>",
+  "repository": {
+      "type" : "git",
+      "url" : "https://github.com/oaprograms/lingo-player"
+  },
+  "window": {
+    "width": 900,
+    "height": 600,
+    "min_width": 300,
+    "min_height": 260,
+    "icon": "app/img/logo-sm.png",
+    "toolbar": false
+  },
+  "dependencies": {
+    "file-url": "^1.0.0",
+    "iconv-lite": "^0.4.8",
+    "jschardet": "^1.1.1",
+    "nedb": "^1.1.2",
+    "underscore": "^1.8.3",
+    "wcjs-player": "*"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.12.36",
+    "karma-jasmine": "^0.3.5",
+    "karma-nodewebkit-launcher": "0.0.12"
+  }
+}

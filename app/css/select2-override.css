@@ -1,0 +1,69 @@
+.select2-container .select2-choice {
+    height: 34px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background-color: #fff;
+    background-image: none;
+    background: #fff;
+}
+
+.select2-container .select2-choice .select2-chosen { margin-top: 4px }
+.select2-container .select2-choice abbr { top: 13px }
+.select2-container .select2-choice,
+.select2-container .select2-choice .select2-arrow {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border-color: #ccc;
+}
+
+.select2-container .select2-choice .select2-arrow {
+    background-color: #fafafa;
+    background-image: none;
+    background: #fafafa;
+    width: 22px;
+}
+
+.select2-container .select2-choice .select2-arrow b>span { margin: 4px 0 0 6px }
+.select2-container.select2-container-active .select2-choice { border-color: #91acce }
+.select2-container.select2-dropdown-open .select2-choice { border-bottom-color: #ccc }
+.select2-drop {
+    -webkit-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.select2-drop:not(.select2-drop-above) { margin-top: -3px }
+.select2-drop .select2-results { max-height: 300px }
+.select2-drop .select2-results li {
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+.select2-search { margin: 4px 0 }
+.select2-search input,
+.select2-search input:focus {
+    background-color: #fff;
+    background-image: none;
+    background: #fff;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+.select2-container.form-control {
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.select2-container .select2-input, .select2-container .select2-input:focus{
+    border: 1px solid #d2d2d2;
+}
+
+.select2-container .select2-choice .select2-arrow{
+    padding: 2px;
+}

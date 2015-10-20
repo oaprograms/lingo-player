@@ -1,0 +1,46 @@
+.def {
+    clear: both;
+    color: rgb(119,119,119);
+    font-size: 15px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px 10px 10px 0;
+
+}
+.def table{
+    margin: 10px auto 0 auto;
+}
+.def tr{
+    border: none;
+    vertical-align: top;
+}
+.def td{
+    border: none;
+    height: 22px;
+    padding: 0 5px;
+}
+.def td:last-child {
+    width: auto !important;
+}
+.def .gt-baf-pos-head {
+    font-style: italic;
+    text-align: left;
+}
+.def .gt-baf-marker-container {
+    max-width: 38px;
+    text-align: right;
+}
+.def .gt-baf-word-clickable {
+    color: #000;
+}
+.def .gt-baf-translations {
+    padding: 0 12px 0 8px;
+}
+
+.def .gt-baf-cts {
+    background: #aaa;
+    display: inline-block;
+    height: 7px;
+    margin: 6px 2px 5px 0;
+}

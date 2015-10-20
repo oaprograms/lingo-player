@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Lingo Player</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="fontello/css/fontello.css" rel="stylesheet">
+    <link href="css/select.css" rel="stylesheet">
+    <link href="css/select2.css" rel="stylesheet">
+    <link href="css/select2-override.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="css/app-dict.css" rel="stylesheet">
+    <link href="css/app-utility.css" rel="stylesheet">
+    <link href="css/app-dialogs.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+
+</head>
+<body ng-controller="mainCtrl" autofocus>
+
+<div ng-show="data.dialog" class="dim-background" ng-click="data.dialog = null">
+    <div ng-if="data.dialog == 'file'" ng-include="'partials/fileDialog.html'" stop-event="click"></div>
+    <div ng-if="data.dialog == 'subs'" ng-include="'partials/subsDialog.html'" stop-event="click"></div>
+    <div ng-if="data.dialog == 'words'" ng-include="'partials/wordsDialog.html'" stop-event="click"></div>
+    <div ng-if="data.dialog == 'shortcuts'" ng-include="'partials/shortcutsDialog.html'" stop-event="click"></div>
+    <div ng-if="data.dialog == 'about'" ng-include="'partials/aboutDialog.html'" stop-event="click"></div>
+</div>
+
+<!--------------------------  Player & subs ------------------------------------>
+
+<div class="vl-container" ng-cloak>
+
+    <!--Google translate invisible iframe-->
+    <iframe id="iframe" src="https://translate.google.com/#en/sr/test" frameborder="0"></iframe>
+
+
+    <div class="player-button" ng-click="showDialog('words')" ng-show="data.playerInfo.showControls && ! data.dialog" ng-cloak>
+        <i class="glyphicon glyphicon-search"></i> <span> Saved Words</span>
+    </div>
+    <!--</div>-->
+
+    <div class="center" ng-hide="data.paths.movie" ng-cloak>
+        <img src="img/logo.png" style="width:150px; height:150px;" alt=""/>
+    </div>
+
+    <!--<div id="left" style="position: absolute; z-index: 4; top: 50px; left: 50px;" >-->
+        <!--<img src="{{ data.images[0].tbUrl }}" alt="" style="width: 100px; height: auto; margin: 10px; display: block;" />-->
+    <!--</div>-->
+
+    <!--wcjs player-->
+    <div id="player" ng-cloak></div>
+
+    <!--Subtitles-->
+    <div id="down" ng-cloak>
+        <div>
+            <!--1st subtitle-->
+            <div class="subtitle"
+                    ng-show="data.currentSub1.start < data.playerInfo.positionTime && data.currentSub1.start > data.playerInfo.positionTime - 8">
+                <span ng-repeat="word in data.currentSub1.words" ng-mouseenter="pauseVideoTemp()" ng-mouseleave="playVideoTemp()"><span
+                        ng-if="word.isWord" class="pointer level{{word.level}}"
+                     ng-mouseenter="define(word, data.lang1, data.lang2);"
+                     uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300"
+                     ng-mousedown="changeWordLevel(word, $event.button != 0); highlightWords(data.currentSub1); playWord(true);">{{ word.text }}</span><span
+                        ng-if="! word.isWord">{{ word.text }}</span></span>
+                <span  ng-mouseenter="pauseVideoTemp()" ng-mouseleave="playVideoTemp()">
+                    <i class="glyphicon glyphicon-ok-sign btn-icon subtle-button"
+                         ng-click="saveAllWords(4);" ng-show="data.currentSub1.words"
+                         uib-tooltip="Mark all as known" tooltip-placement="bottom" tooltip-popup-delay="150"></i>
+                </span>
+            </div>
+            <!--2nd subtitle-->
+            <div class="subtitle subtitle2"
+                 ng-show="data.currentSub2.start < data.playerInfo.positionTime && data.currentSub2.start > data.playerInfo.positionTime - 8">
+                <span ng-repeat="word in data.currentSub2.words"  ng-mouseenter="pauseVideoTemp()" ng-mouseleave="playVideoTemp()"><span ng-if="word.isWord" class="pointer"
+                      ng-mouseenter="define(word, data.lang2, data.lang1);"
+                      uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300"
+                      >{{ word.text }}</span><span
+                        ng-if="! word.isWord">{{ word.text }}</span></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--------------------------  Utility controls  ------------------------------------>
+
+<input style="display:none;" id="fileDialog" type="file" accept=".3g2,.3gp,.3gp2,.3gpp,.amv,.asf,.avi,.bik,.bin,.divx,.drc,.dv,.evo,.f4v,.flv,.gvi,.gxf,.iso,.m1v,.m2v,.m2t,.m2ts,.m4v,.mkv,.mov,.mp2,.mp2v,.mp4,.mp4v,.mpe,.mpeg,.mpeg1,.mpeg2,.mpeg4,.mpg,.mpv2,.mts,.mtv,.mxf,.mxg,.nsv,.nuv,.ogg,.ogm,.ogv,.ogx,.ps,.rec,.rm,.rmvb,.rpl,.thp,.tod,.ts,.tts,.txd,.vob,.vro,.webm,.wm,.wmv,.wtv,.xesc"/>
+<input style="display:none;" id="fileDialog2" type="file" accept=".srt"/>
+
+<!--------------------------  Libs  ------------------------------------>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/angular.min.js"></script>
+<script src="libs/angular-animate.js"></script>
+<script src="libs/ui-bootstrap-tpls-0.14.2.min.js"></script>
+<script src="libs/select.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

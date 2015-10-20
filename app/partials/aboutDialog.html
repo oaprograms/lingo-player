@@ -1,0 +1,35 @@
+<div class="panel panel-default dialog" style="width: 470px; height: 400px;">
+    <div class="panel-heading">
+        About
+        <a href class="pull-right" ng-click="data.dialog = null">
+            Close
+        </a>
+    </div>
+    <div class="panel-body">
+        <div style="margin-left:125px;">
+            <img src="img/logo.png" alt="" style="width: 200px; height: 200px"/>
+        </div>
+
+        <table class="about-table mmmt">
+            <tr>
+                <td>Author: </td>
+                <td>Ognjen Apic</td>
+            </tr>
+            <tr>
+                <td>Website: </td>
+                <td>
+                    <a class="pointer" ng-click="openUrl('http://oaprograms.github.io/lingo-player')">
+                    http://oaprograms.github.io/lingo-player</a>
+                </td>
+            </tr>
+            <tr>
+                <td ng-dblclick="showDevTools()">Source on GitHub: </td>
+                <td>
+                    <a class="pointer" ng-click="openUrl('https://github.com/oaprograms/lingo-player')">
+                        https://github.com/oaprograms/lingo-player</a>
+                </td>
+            </tr>
+        </table>
+        </div>
+    </div>
+</div>

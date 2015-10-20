@@ -1,0 +1,91 @@
+.visibility-hidden{
+    visibility: hidden;
+}
+
+.inline-block{
+    display: inline-block;
+}
+.pointer{
+    cursor: pointer;
+}
+
+.bigger{
+    font-size: 1.5em;
+}
+
+.hidden{
+    display:none;
+}
+
+.green{color:green;} .red{color:red;}
+
+.mt { margin-top: 4px; } .mmt { margin-top: 8px; } .mmmt { margin-top: 16px; } .mmmmt { margin-top: 32px; }
+.ml { margin-left: 4px; } .mml { margin-left: 8px; } .mmml { margin-left: 16px; } .mmmml { margin-left: 32px; }
+.mb { margin-bottom: 4px; } .mmb { margin-bottom: 8px; } .mmmb { margin-bottom: 16px; } .mmmmb { margin-bottom: 32px; }
+.mr { margin-right: 4px; } .mmr { margin-right: 8px; } .mmmr { margin-right: 16px; } .mmmmr { margin-right: 32px; }
+
+hr{
+    margin: 15px 0;
+}
+
+input{
+    border: 1px solid #ddd;
+    padding: 4px 5px;
+}
+
+.dim-background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(90, 90, 90, 0.50);
+    z-index: 100;
+}
+
+.ui-select-container{
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.loading{
+    font-size: 2em;
+    text-align: center;
+    color: #bbb;
+    padding: 20%;
+    font-weight: bold;
+}
+
+.no-select{
+     user-select: none;
+     -o-user-select:none;
+     -moz-user-select: none;
+     -khtml-user-select: none;
+     -webkit-user-select: none;
+ }
+
+.subtle-button{
+    opacity: 0.125;
+}
+.subtle-button:hover{
+    opacity: 1;
+}
+
+.dim-button{
+    opacity: 0.5;
+}
+.dim-button:hover{
+    opacity: 1;
+}
+
+.no-events{
+    pointer-events: none !important;
+}
+
+.item-list{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}

@@ -1,0 +1,110 @@
+
+.subs-dialog-left-div{
+    position: absolute;
+    width: 38%;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    padding: 24px 16px 8px 12px;
+    background-color: #eee;
+    direction:rtl;
+}
+
+.words-table{
+    width: 80%;
+    margin: 16px 16px 16px 0;
+}
+
+.words-table tr.word-row:hover, .subs-table tr:hover, .words-table tr.add-word{
+    background-color: #eeeeee;
+}
+
+.words-table .actions{
+    color: #b6b6b6;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.word-level .word-level-indicator{ visibility: visible;}
+.word-level .word-level-change{ visibility: hidden;}
+.word-level:hover .word-level-indicator{ visibility: hidden;}
+.word-level:hover .word-level-change{ visibility: visible;}
+
+.words-table tr:hover .no-actions{
+    visibility: hidden;
+}
+
+.words-table tr:hover .actions{
+    visibility: visible;
+}
+
+.words-table .actions:hover{
+    color: #2f2f2f;
+}
+.words-table td{
+    padding: 10px;
+}
+.words-table tr.word-row td{
+    border-bottom: 1px solid #eee;
+}
+
+.subs-dialog-right-div .checkbox-filters label{
+    font-weight: normal;
+    font-size: 14px;
+    color: #777777;
+}
+
+.file-table{
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 23px;
+}
+
+.file-table td{
+    padding: 7px;
+}
+
+.file-table .file-text-input{
+    width: 100%;
+}
+
+.recent-files{
+    margin: 30px 10px 0 0;
+    bottom: 0;
+    background-color: #ddd;
+    height: 195px;
+    padding: 15px 30px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.file-field-label{
+    margin: 2px 4px;
+}
+
+.about-table td:first-child{
+    text-align: right;
+    font-weight: bold;
+}
+.about-table td{
+    padding: 6px;
+}
+
+.langsel{
+    width: 180px;
+    display: inline-block;
+}
+.bordered{
+    border-style: solid !important;
+}
+
+.level-picker{
+    width: 16px;
+    height: 16px;
+    border: 2px none #7c7c7c;
+    display: inline-block;
+    position: relative;
+    margin-left: 2px;
+    top: 4px;
+}

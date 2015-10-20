@@ -1,0 +1,17 @@
+<div style="color:black; text-shadow: none;">
+    <div style="text-align: center; font-size: 16px">
+
+        <!--<span style="color: green; margin: 5px;">||</span>-->
+
+        <div style="color: gray">{{ data.wordDefinition.original }}</div>
+        <!--<img src="img/googletranslate.png" alt="" width="22" height="22" style="opacity:0.8"/><br>-->
+        <div style="background-color: #7ccf7c; width: 60px; height: 2px; margin: 4px auto;" ng-show="data.wordDefinition.translation"></div>
+        <div style="font-weight: bold">{{ data.wordDefinition.translation }}</div>
+        <div style="color:red;" ng-show="! (data.wordDefinition.original || data.wordDefinition.translation)">No connection</div>
+    </div>
+
+    <div class="def" style="max-height: 260px;">
+        <div ng-bind-html="data.wordDefinition.dictionary"></div>
+    </div>
+
+</div>
