@@ -5,7 +5,7 @@ Open source, cross-platform video player with language learning features.
 - Based on VLC player, offers dictionary lookup for subtitles, word pronunciation and word saving features
 - Works with 90 languages (8100 language combinations!), since it's using Google Translate
 
-Project website: http://oaprograms.github.io/lingo-player
+To download Windows release go here: http://oaprograms.github.io/lingo-player
 
 **How it works:**
 
