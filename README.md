@@ -35,7 +35,7 @@ Let's say you are learning Spanish:
 
 ## Contributing
 
-Anyone is very welcome to contribute to this project. In case you are interested, contact me at ognjen.apic at gmail.com.
+Anyone is very welcome to contribute to this project. In case you are interested, contact me at ognjen.apic at gmail.com, or start an issue.
 
 **Planned features in future (help is welcome):**
 
