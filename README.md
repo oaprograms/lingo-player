@@ -7,7 +7,7 @@ Open source, cross-platform video player with language learning features.
 
 Project website: http://oaprograms.github.io/lingo-player
 
-### How it works:
+**How it works:**
 
 Let's say you are learning Spanish:
 
@@ -37,7 +37,7 @@ Let's say you are learning Spanish:
 
 Anyone is very welcome to contribute to this project. In case you are interested, contact me at ognjen.apic at gmail.com.
 
-### Planned features in future (help is welcome):
+**Planned features in future (help is welcome):**
 
 - Auto-download subtitles from OpenSubtitles
 - Make Lingo Player homepage, video tutorial
