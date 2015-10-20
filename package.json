@@ -8,6 +8,11 @@
       "type" : "git",
       "url" : "https://github.com/oaprograms/lingo-player"
   },
+  "bugs": {
+      "url": "https://github.com/oaprograms/lingo-player/issues"
+  },
+  "chromium-args": "--d3d9 --disable-d3d11 --gpu-no-context-lost",
+  "single-instance": false,
   "window": {
     "width": 900,
     "height": 600,

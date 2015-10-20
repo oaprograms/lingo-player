@@ -63,7 +63,8 @@ function tryAndAlign(sub1, sub2, _i1, _i2, numAligned, numUnaligned, pairs){
             if (s1 < s2){
                 pairs.push([JSON.parse(JSON.stringify(sub1[i1])), null]);
                 // merge subs if possible
-                if(i1-1 >= 0 && sub1[i1-1].subtitle.text.length + sub1[i1].subtitle.text.length < 80){
+                if(i1-1 >= 0 && sub1[i1-1].subtitle.text.length + sub1[i1].subtitle.text.length < 180 &&
+                    Math.abs(sub1[i1].subtitle.start - sub1[i1-1].subtitle.start) < 12){
                     sub1[i1-1].subtitle.text += ' ' + sub1[i1].subtitle.text;
                     sub1.splice(i1, 1);
                     i1 -= 1;
@@ -72,7 +73,8 @@ function tryAndAlign(sub1, sub2, _i1, _i2, numAligned, numUnaligned, pairs){
             } else {
                 pairs.push([null, JSON.parse(JSON.stringify(sub2[i2]))]);
                 // merge subs if possible
-                if(i2-1 >= 0 && sub2[i2-1].subtitle.text.length + sub2[i2].subtitle.text.length < 80){
+                if(i2-1 >= 0 && sub2[i2-1].subtitle.text.length + sub2[i2].subtitle.text.length < 180 &&
+                    Math.abs(sub2[i2].subtitle.start - sub2[i2-1].subtitle.start) < 12){
                     sub2[i2-1].subtitle.text += ' ' + sub2[i2].subtitle.text;
                     sub2.splice(i2, 1);
                     i2 -= 1;
@@ -101,6 +103,7 @@ exports.alignSubs = function(sub1, sub2, sync){
     var sub2Copy = JSON.parse(JSON.stringify(sub2));
     var pairs = [];
     // align subs
+    console.log(sub1);
     for(var ii in sub2Copy.data){
         sub2Copy.data[ii].subtitle.start *= sync.k;
         sub2Copy.data[ii].subtitle.start += sync.n;
@@ -123,6 +126,7 @@ exports.alignSubs = function(sub1, sub2, sync){
             sub2Copy.data[i].subtitle.id = i + 1;
         }
     }
+    console.log(sub1Copy);
     return {
         sub1: sub1Copy,
         sub2: sub2Copy,

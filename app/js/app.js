@@ -426,19 +426,24 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
     $scope.reloadSubs = function () {
         try{
             if($scope.data.paths.sub1){
-                $scope.data.subtitles.sub1 = util.addTokenizations(util.loadSubtitle($scope.data.paths.sub1, $scope.data.lang1));
-                $scope.data.wordFrequencies = util.countWordFrequencies($scope.data.subtitles.sub1);
+                $scope.data.subtitles.sub1 = util.loadSubtitle($scope.data.paths.sub1, $scope.data.lang1);
             } else {
                 delete $scope.data.subtitles.sub1;
             }
             if($scope.data.paths.sub2){
-                $scope.data.subtitles.sub2 = util.addTokenizations(util.loadSubtitle($scope.data.paths.sub2, $scope.data.lang2));
+                $scope.data.subtitles.sub2 = util.loadSubtitle($scope.data.paths.sub2, $scope.data.lang2);
             } else {
                 delete $scope.data.subtitles.sub2;
             }
             if($scope.data.subtitles.sub1 && $scope.data.subtitles.sub2){
                 var bestSync = subsync.getBestTransform($scope.data.subtitles.sub1.data, $scope.data.subtitles.sub2.data);
                 $scope.data.subtitles = subtitle.alignSubs($scope.data.subtitles.sub1, $scope.data.subtitles.sub2, bestSync);
+            }
+            if ($scope.data.subtitles.sub1){
+                $scope.data.subtitles.sub1 = util.addTokenizations($scope.data.subtitles.sub1);
+                $scope.data.wordFrequencies = util.countWordFrequencies($scope.data.subtitles.sub1);
+            }
+            if ($scope.data.subtitles.sub2){
                 $scope.data.subtitles.sub2 = util.addTokenizations($scope.data.subtitles.sub2);
             }
         } catch (e){
