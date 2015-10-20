@@ -102,6 +102,10 @@ header h2 {
   margin-bottom: 40px;
 }
 
+a.button.windows{
+    width: 280px;
+}
+
 a.button {
   display: block;
   float: left;
@@ -152,8 +156,8 @@ a.button span {
   padding-left: 50px;
 }
 
-#download-zip span {
-  background: transparent url(../images/zip-icon.png) 12px 50% no-repeat;
+#download-windows span {
+  background: transparent url(../images/windows-icon.png) 12px 50% no-repeat;
 }
 #download-tar-gz span {
   background: transparent url(../images/tar-gz-icon.png) 12px 50% no-repeat;
