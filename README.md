@@ -1,4 +1,4 @@
-*Description*
+## Description
 
 Open source, cross-platform video player with language learning features.
 
@@ -7,7 +7,7 @@ Open source, cross-platform video player with language learning features.
 
 Project website: http://oaprograms.github.io/lingo-player
 
-**How it works:**
+### How it works:
 
 Let's say you are learning Spanish:
 
@@ -16,7 +16,7 @@ Let's say you are learning Spanish:
 - You can mark words with 4 levels of familiarity (New - red, Recognized - orange, Familiar - yellow and Known - green)
 - You can look up list of saved words any time and read subtitles in subtitle listing mode.
 
-*Used Technologies*
+## Used Technologies
 
 - NW.js (http://nwjs.io/)
 - AngularJS (https://angularjs.org/)
@@ -25,19 +25,19 @@ Let's say you are learning Spanish:
 - NeDB (https://github.com/louischatriot/nedb)
 - Google Translate (https://translate.google.com/)
 
-*Prerequisites*
+## Prerequisites
 
 - [WebChimera.js prerequisites](https://github.com/RSATom/WebChimera.js#build-prerequisites)
 
-*Installation*
+## Installation
 
 - ``npm install``
 
-*Contributing*
+## Contributing
 
 Anyone is very welcome to contribute to this project. In case you are interested, contact me at ognjen.apic at gmail.com.
 
-***Planned features in future (help is welcome):***
+### Planned features in future (help is welcome):
 
 - Auto-download subtitles from OpenSubtitles
 - Make Lingo Player homepage, video tutorial
@@ -48,13 +48,13 @@ Anyone is very welcome to contribute to this project. In case you are interested
 - Highlight frequent words?
 - Translate app UI into several languages
 
-*Screenshots*
+## Screenshots
 
 ![Main screen](http://oaprograms.github.io/lingo-player/images/screenshots/1.png)
 ![Main screen](http://oaprograms.github.io/lingo-player/images/screenshots/2.png)
 ![Words dialog](http://oaprograms.github.io/lingo-player/images/screenshots/3.png)
 ![File dialog](http://oaprograms.github.io/lingo-player/images/screenshots/4.png)
 
-*Licence*
+## Licence
 
 MIT
