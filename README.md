@@ -42,6 +42,7 @@ Anyone is very welcome to contribute to this project. In case you are interested
 - Auto-download subtitles from OpenSubtitles
 - Make Lingo Player homepage, video tutorial
 - Support more subtitle formats (currently supports .srt and .sub)
+- Auto-detect subtitle encoding (find a good library for this)
 - Make OSX version
 - Add more dictionary sources
 - Lemmatization / stemming?
