@@ -52,9 +52,9 @@ Anyone is very welcome to contribute to this project. In case you are interested
 ## Screenshots
 
 ![Main screen](http://oaprograms.github.io/lingo-player/images/screenshots/1.png)
-![Main screen](http://oaprograms.github.io/lingo-player/images/screenshots/2.png)
 ![Words dialog](http://oaprograms.github.io/lingo-player/images/screenshots/3.png)
 ![File dialog](http://oaprograms.github.io/lingo-player/images/screenshots/4.png)
+![Main screen](http://oaprograms.github.io/lingo-player/images/screenshots/2.png)
 
 ## Licence
 
