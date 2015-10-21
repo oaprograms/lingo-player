@@ -203,19 +203,3 @@ i{
     width: 100%;
     clear: both;
 }
-
-.subs-dialog-right-div{
-    position: absolute;
-    top: 35px;
-    width: 61%;
-    bottom: 0;
-    right: 0;
-    overflow-y: scroll;
-    font-size: 15px;
-    padding: 10px;
-}
-
-table.subs-table td{
-    width: 50%;
-    padding: 5px;
-}

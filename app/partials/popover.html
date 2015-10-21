@@ -10,7 +10,7 @@
         <div style="color:red;" ng-show="! (data.wordDefinition.original || data.wordDefinition.translation)">No connection</div>
     </div>
 
-    <div class="def" style="max-height: 260px;">
+    <div class="def" style="max-height: {{ calcPopupDictHeight() }}px;">
         <div ng-bind-html="data.wordDefinition.dictionary"></div>
     </div>
 

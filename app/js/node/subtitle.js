@@ -103,7 +103,6 @@ exports.alignSubs = function(sub1, sub2, sync){
     var sub2Copy = JSON.parse(JSON.stringify(sub2));
     var pairs = [];
     // align subs
-    console.log(sub1);
     for(var ii in sub2Copy.data){
         sub2Copy.data[ii].subtitle.start *= sync.k;
         sub2Copy.data[ii].subtitle.start += sync.n;
@@ -126,7 +125,6 @@ exports.alignSubs = function(sub1, sub2, sync){
             sub2Copy.data[i].subtitle.id = i + 1;
         }
     }
-    console.log(sub1Copy);
     return {
         sub1: sub1Copy,
         sub2: sub2Copy,

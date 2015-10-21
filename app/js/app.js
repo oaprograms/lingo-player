@@ -172,6 +172,9 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
     $scope.pauseVideoTemp = function(){
         if(! $scope.data.playerInfo.subMouseEntered){
             $scope.data.playerInfo.wasPlaying = $scope.player.playing();
+            if($scope.data.playerInfo.wasPlaying){
+                $scope.player.notify('auto-paused');
+            }
             $scope.data.playerInfo.subMouseEntered = true;
         }
         $scope.player.pause();
@@ -181,6 +184,7 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
     $scope.playVideoTemp = function(){
         $scope.data.playerInfo.subMouseEntered = false;
         if($scope.data.playerInfo.wasPlaying){
+            $scope.player.notify('');
             $scope.player.play();
         }
     };
@@ -550,6 +554,10 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
             $def.animate({ scrollTop: $def.scrollTop() + 100 }, 100);
         }
     });
+
+    $scope.calcPopupDictHeight = function(){
+        return Math.max(200, $('#player').height() - 300);
+    };
 
     $scope.showDevTools = function(){
         gui.Window.get().showDevTools();
