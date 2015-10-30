@@ -100,7 +100,7 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
     $scope.db = database.openDatabase(gui);
 
     // plays word using google translate TTS (triggers click inside iframe)
-    $scope.playWord = function(fromSubs){
+    $scope.playWord = function(fromSubs, target){
         if(fromSubs && $scope.data.config.dontPlayWordOnClick) return;
 
         $timeout(function(){
@@ -110,7 +110,8 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
                 node.dispatchEvent (clickEvent);
             }
 
-            var targetNode = document.getElementById('iframe').contentDocument.getElementById('gt-src-listen');
+            var targetNode = document.getElementById(target ? target : 'iframe')
+                .contentDocument.getElementById('gt-src-listen');
             triggerMouseEvent (targetNode, "mouseover");
             triggerMouseEvent (targetNode, "mousedown");
             triggerMouseEvent (targetNode, "mouseup");
@@ -126,28 +127,31 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
 
     // updates subtitles periodically, and auto-pauses playback if enabled
     $interval(function () {
+        var data = $scope.data;
         // update position variables
-        $scope.data.playerInfo.positionPercent = $scope.player.position();
-        $scope.data.playerInfo.positionTime = parseFloat($scope.player.time()) / 1000.0;
-        $scope.data.playerInfo.playing = $scope.player.playing();
-        $scope.data.playerInfo.showControls =
-            ((! $scope.data.playerInfo.subMouseEntered || ! $scope.data.playerInfo.wasPlaying)
-            && ! $scope.data.playerInfo.playing && $scope.data.paths.movie);
+        data.playerInfo.positionPercent = $scope.player.position();
+        data.playerInfo.positionTime = parseFloat($scope.player.time()) / 1000.0;
+        data.playerInfo.playing = $scope.player.playing();
+        data.playerInfo.showControls =
+            ((! data.playerInfo.subMouseEntered || ! data.playerInfo.wasPlaying)
+            && ! data.playerInfo.playing && data.paths.movie);
 
         // show appropriate subtitle
-        if ($scope.data.subtitles.sub1 && $scope.data.subtitles.sub1.data) {
-            var text1 = subtitle.findSub($scope.data.subtitles.sub1, $scope.data.playerInfo.positionTime || 0);
-            if (! $scope.data.currentSub1 || text1.subtitle.text != $scope.data.currentSub1.text) { // subtitle changed
-                $scope.data.currentSub1 = text1.subtitle;
-                $scope.highlightWords($scope.data.currentSub1);
+        if (data.subtitles.sub1 && data.subtitles.sub1.data) {
+            var text1 = subtitle.findSub(data.subtitles.sub1, data.playerInfo.positionTime || 0);
+            if (! data.currentSub1 || text1.subtitle.text != data.currentSub1.text) { // subtitle changed
+                data.currentSub1 = text1.subtitle;
+                $scope.highlightWords(data.currentSub1);
             }
         }
-        if ($scope.data.subtitles.sub2 && $scope.data.subtitles.sub2.data) {
-            var text2 = subtitle.findSub($scope.data.subtitles.sub2, $scope.data.playerInfo.positionTime || 0);
-            if (! $scope.data.currentSub2 || text2.subtitle.text != $scope.data.currentSub2.text) {
-                $scope.data.currentSub2 = text2.subtitle;
+        if (data.subtitles.sub2 && data.subtitles.sub2.data) {
+            var text2 = subtitle.findSub(data.subtitles.sub2, data.playerInfo.positionTime || 0);
+            if (! data.currentSub2 || text2.subtitle.text != data.currentSub2.text) {
+                data.currentSub2 = text2.subtitle;
             }
         }
+        data.playerInfo.showSub1 = data.currentSub1.start < data.playerInfo.positionTime && data.currentSub1.start > data.playerInfo.positionTime - 8;
+        data.playerInfo.showSub2 = data.currentSub2.start < data.playerInfo.positionTime && data.currentSub2.start > data.playerInfo.positionTime - 8;
     }, 200);
 
     // update word status for every word in subtitle (get from db)
@@ -170,20 +174,22 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
 
     // when mouse hovers subtitle, pause video
     $scope.pauseVideoTemp = function(){
-        if(! $scope.data.playerInfo.subMouseEntered){
-            $scope.data.playerInfo.wasPlaying = $scope.player.playing();
-            if($scope.data.playerInfo.wasPlaying){
-                $scope.player.notify('auto-paused');
+        if ($scope.data.playerInfo.showSub1) {
+            if (!$scope.data.playerInfo.subMouseEntered) {
+                $scope.data.playerInfo.wasPlaying = $scope.player.playing();
+                if ($scope.data.playerInfo.wasPlaying) {
+                    $scope.player.notify('auto-paused');
+                }
+                $scope.data.playerInfo.subMouseEntered = true;
             }
-            $scope.data.playerInfo.subMouseEntered = true;
+            $scope.player.pause();
         }
-        $scope.player.pause();
     };
 
     // when mouse leaves subtitle, unpause video
     $scope.playVideoTemp = function(){
         $scope.data.playerInfo.subMouseEntered = false;
-        if($scope.data.playerInfo.wasPlaying){
+        if ($scope.data.playerInfo.wasPlaying) {
             $scope.player.notify('');
             $scope.player.play();
         }
@@ -234,7 +240,7 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
 
     $scope.scrapeGoogleTranslateFromIFrame = function(){
         try {
-            var $iframe = $('iframe');
+            var $iframe = $('#iframe');
             // get translated word
             var translation = $($($iframe.contents()).find("#result_box")).last().text();
             var original = $($($iframe.contents()).find("textarea#source")).last().val();
@@ -251,6 +257,9 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
                 dictionary: $sce.trustAsHtml(table)
             };
 
+            // second iframe, for phrases
+            var $iframe2 = $('#iframe2');
+            $scope.data.phraseTranslation =  $($($iframe2.contents()).find("#result_box")).last().text() || '';
 //            // image:
 //            $('#left').empty();
 //            $($iframe.contents()).find("img:lt(3)").appendTo($('#left'));
@@ -290,20 +299,24 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         }
     };
 
+    $scope.translatePhrase = function(phrase, sourceLang, targetLang){
+        if(phrase) {
+            var phraseUrl = 'https://translate.google.com/#' + sourceLang + '/' + targetLang + '/' + encodeURIComponent(phrase);
+            if (!$scope.data.phraseUrl || $scope.data.phraseUrl != phraseUrl) {
+                $scope.data.phraseUrl = phraseUrl;
+                $('#iframe2').attr('src', phraseUrl);
+                $scope.observeIframes();
+            }
+        }
+    };
+
+    // translate word
     $scope.define = function (word, sourceLang, targetLang) {
         var url = $scope.data.translateUrl = 'https://translate.google.com/#' + sourceLang + '/' + targetLang + '/' + encodeURIComponent(word.text.toLowerCase());
         $timeout(function(){
             if($scope.data.translateUrl == url){
                 $('#iframe').attr('src', url);
-                // observe iframe changes by dirty checking (I think there's no event for that)
-                $timeout($scope.scrapeGoogleTranslateFromIFrame, 50);
-                $timeout($scope.scrapeGoogleTranslateFromIFrame, 100);
-                $timeout($scope.scrapeGoogleTranslateFromIFrame, 150);
-                $timeout($scope.scrapeGoogleTranslateFromIFrame, 200);
-                $timeout($scope.scrapeGoogleTranslateFromIFrame, 300);
-                $timeout($scope.scrapeGoogleTranslateFromIFrame, 500);
-                $timeout($scope.scrapeGoogleTranslateFromIFrame, 1000);
-                $timeout($scope.scrapeGoogleTranslateFromIFrame, 2000);
+                $scope.observeIframes();
             }
         }, 150);
 
@@ -312,6 +325,17 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
 //            try {$scope.data.images = JSON.parse(body).responseData.results;}
 //        });
 
+    };
+    $scope.observeIframes = function() {
+        // observe iframe changes by dirty checking (I think there's no event for that)
+        $timeout($scope.scrapeGoogleTranslateFromIFrame, 50);
+        $timeout($scope.scrapeGoogleTranslateFromIFrame, 100);
+        $timeout($scope.scrapeGoogleTranslateFromIFrame, 150);
+        $timeout($scope.scrapeGoogleTranslateFromIFrame, 200);
+        $timeout($scope.scrapeGoogleTranslateFromIFrame, 300);
+        $timeout($scope.scrapeGoogleTranslateFromIFrame, 500);
+        $timeout($scope.scrapeGoogleTranslateFromIFrame, 1000);
+        $timeout($scope.scrapeGoogleTranslateFromIFrame, 2000);
     };
 
     $scope.getUniqueLanguagePairs = function () {

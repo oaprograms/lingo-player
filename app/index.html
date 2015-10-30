@@ -31,7 +31,10 @@
 <div class="vl-container" ng-cloak>
 
     <!--Google translate invisible iframe-->
-    <iframe id="iframe" src="https://translate.google.com/#en/sr/test" frameborder="0"></iframe>
+    <!--For words-->
+    <iframe id="iframe" src="https://translate.google.com/#en/en/Error" frameborder="0"></iframe>
+    <!--For phrases-->
+    <iframe id="iframe2" src="https://translate.google.com/#en/en/Error" frameborder="0"></iframe>
 
 
     <div class="player-button" ng-click="showDialog('words')" ng-show="data.playerInfo.showControls && ! data.dialog" ng-cloak>
@@ -52,27 +55,35 @@
 
     <!--Subtitles-->
     <div id="down" ng-cloak>
-        <div>
+        <div class="down-content" ng-mouseenter="pauseVideoTemp()" ng-mouseleave="playVideoTemp()">
+            <!--buttons-->
+            <div class="sub-buttons"  >
+                <span class="sub-button" ng-click="playPrevSub()" title="Jump to the previous subtitle"><i class="fa fa-chevron-left"></i></span>
+                <span class="sub-button b-red" ng-click="playWord(false, 'iframe2')" ng-show="data.playerInfo.showSub1" title="Listen"
+                      ng-mousemove="translatePhrase(data.currentSub1.text, data.lang1, data.lang2)" ><i class="fa fa-volume-up"></i></span>
+                <span class="sub-button b-red" ng-show="data.playerInfo.showSub1" title="Auto-translate"
+                      uib-popover-template="'partials/popover-phrase.html'" popover-trigger="mouseenter" popover-popup-delay="300"
+                      ng-mousemove="translatePhrase(data.currentSub1.text, data.lang1, data.lang2)" ><i class="fa fa-comment"></i></span>
+                <span  class="sub-button b-green" ng-click="saveAllWords(4);" ng-show="data.playerInfo.showSub1" title="Mark all words as known">
+                    <i class="fa fa-check"></i>
+                </span>
+                <span class="sub-button" ng-click="playNextSub()" title="Jump to the next subtitle"><i class="fa fa-chevron-right"></i></span>
+
+            </div>
+
             <!--1st subtitle-->
-            <div class="subtitle"
-                    ng-show="data.currentSub1.start < data.playerInfo.positionTime && data.currentSub1.start > data.playerInfo.positionTime - 8">
-                <span ng-repeat="word in data.currentSub1.words" ng-mouseenter="pauseVideoTemp()" ng-mouseleave="playVideoTemp()"><span
+            <div class="subtitle" ng-show="data.playerInfo.showSub1">
+                <span ng-repeat="word in data.currentSub1.words"><span
                         ng-if="word.isWord" class="pointer level{{word.level}}"
-                     ng-mouseenter="define(word, data.lang1, data.lang2);"
+                     ng-mouseenter="define(word, data.lang1, data.lang2)"
                      uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300"
                      ng-mousedown="changeWordLevel(word, $event.button != 0); highlightWords(data.currentSub1); playWord(true);">{{ word.text }}</span><span
                         ng-if="! word.isWord">{{ word.text }}</span></span>
-                <span  ng-mouseenter="pauseVideoTemp()" ng-mouseleave="playVideoTemp()">
-                    <i class="glyphicon glyphicon-ok-sign btn-icon subtle-button"
-                         ng-click="saveAllWords(4);" ng-show="data.currentSub1.words"
-                         uib-tooltip="Mark all as known" tooltip-placement="bottom" tooltip-popup-delay="150"></i>
-                </span>
             </div>
             <!--2nd subtitle-->
-            <div class="subtitle subtitle2"
-                 ng-show="data.currentSub2.start < data.playerInfo.positionTime && data.currentSub2.start > data.playerInfo.positionTime - 8">
-                <span ng-repeat="word in data.currentSub2.words"  ng-mouseenter="pauseVideoTemp()" ng-mouseleave="playVideoTemp()"><span ng-if="word.isWord" class="pointer"
-                      ng-mouseenter="define(word, data.lang2, data.lang1);"
+            <div class="subtitle subtitle2" ng-show="data.playerInfo.showSub2"><span
+                    ng-repeat="word in data.currentSub2.words"><span ng-if="word.isWord" class="pointer"
+                      ng-mouseenter="define(word, data.lang2, data.lang1)"
                       uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300"
                       >{{ word.text }}</span><span
                         ng-if="! word.isWord">{{ word.text }}</span></span>
