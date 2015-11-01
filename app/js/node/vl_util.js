@@ -9,12 +9,14 @@ var subtitle = require('./subtitle.js');
 var encodings = require('./encodings.js');
 var tokenizer = require('./tokenizer.js');
 
-var loadFile = function(path, langCode){
-
+var loadFile = function(path, langCode, explicit_encoding){
+    var encoding = explicit_encoding;
     var content = fs.readFileSync(path);
-    var encoding = jschardet.detect(content).encoding.toLowerCase();
-    if (! encoding.startsWith('utf-') && langCode){
-        encoding = encodings.getEncoding(langCode);
+    if (! encoding) {
+        encoding = jschardet.detect(content).encoding.toLowerCase();
+        if (!encoding.startsWith('utf-') && langCode) {
+            encoding = encodings.getEncodings(langCode)[0];
+        }
     }
     return iconv.decode(content, encoding);
 };
@@ -35,11 +37,11 @@ exports.detectFormat = function(path){
     }
 };
 
-exports.loadSubtitle = function(path, langCode){
+exports.loadSubtitle = function(path, langCode, encoding){
     // load file to string, then auto-detect format and language
     var format = exports.detectFormat(path);
     if (format.type == 'subtitle'){
-        var content = loadFile(path, langCode);
+        var content = loadFile(path, langCode, encoding);
         return parse.parseSubtitles(content, format.extension);
         // .data[i].subtitle.start, end, id, text
     }else {

@@ -1,4 +1,4 @@
-<div class="panel panel-default file-dialog dialog" style="width: 580px; height: 435px;">
+<div class="panel panel-default file-dialog dialog" style="width: 630px; height: 435px;">
     <div class="panel-heading">
         Choose File
         <a href class="pull-right" ng-click="data.dialog = null">
@@ -9,34 +9,13 @@
         <div class="clearfix"></div>
 
 
-        <div class="mmmb mt mml">
-            <div class="pull-right mmmmr">
-                <label class="mml">You are learning: </label><br/>
-                <ui-select ng-model="data.lang1" ng-change="updateRecentData(); hidePopover()" theme="select2" class="langsel"
-                           uib-popover="Language of video file and main subtitles"
-                           popover-placement="top" popover-trigger="mouseenter" popover-append-to-body="true">
-                    <ui-select-match placeholder="Search...">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices repeat="lang.code as lang in data.languageList | filter: $select.search">
-                        <div ng-bind-html="lang.name | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
-            </div>
-            <div class="pull-right mmmmr">
-                <label class="mml">You speak: </label><br/>
-                <ui-select ng-model="data.lang2"  ng-change="updateRecentData(); hidePopover()" theme="select2" class="langsel"
-                           uib-popover="Choose a language you speak and understand, to be used for Google Translate"
-                           popover-placement="top" popover-trigger="mouseenter" popover-append-to-body="true">
-                    <ui-select-match placeholder="Search...">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices repeat="lang.code as lang in data.languageList | filter: $select.search">
-                        <div ng-bind-html="lang.name | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
-            </div>
-        </div>
+        <!--<div class="mmmb mt mml">-->
+            <!-- -->
+        <!--</div>-->
 
-        <div class="clearfix"></div>
+        <!--<div class="clearfix"></div>-->
 
-        <div class="pull-left" style="width: 50%">
+        <div class="pull-left" style="width: 37%">
             <div class="recent-files">
                 <div class="mmb">
                     <b>Recent files: </b>
@@ -53,7 +32,30 @@
             </div>
 
         </div>
-        <div class="pull-left" style="width: 50%">
+        <div class="pull-left" style="width: 63%">
+            <div class="pull-right mmr mml">
+                <label class="ml">You are learning: </label><br/>
+                <ui-select ng-model="data.lang1" ng-change="updateRecentData(); reloadSubs(); hidePopover()" theme="select2" class="langsel"
+                           uib-popover="Language of video file and main subtitles"
+                           popover-placement="top" popover-trigger="mouseenter" popover-append-to-body="true">
+                    <ui-select-match placeholder="Search...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="lang.code as lang in data.languageList | filter: $select.search">
+                        <div ng-bind-html="lang.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="pull-right mmmr">
+                <label class="ml">You speak: </label><br/>
+                <ui-select ng-model="data.lang2"  ng-change="updateRecentData(); reloadSubs(); hidePopover()" theme="select2" class="langsel"
+                           uib-popover="Choose a language you speak and understand, to be used for Google Translate"
+                           popover-placement="top" popover-trigger="mouseenter" popover-append-to-body="true">
+                    <ui-select-match placeholder="Search...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="lang.code as lang in data.languageList | filter: $select.search">
+                        <div ng-bind-html="lang.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="clearfix"></div>
             <table class="file-table">
                 <tr>
                     <td>
@@ -74,7 +76,10 @@
                     <td>
                         <div class="file-field-label">
                             <b>{{ data.languages[data.lang1] }} subtitles: </b>
-                            <span class="pointer mml dim-button" ng-click="data.paths.sub1 = ''; updateRecentData()">Clear</span>
+                            <span class="pointer mml dim-button" ng-click="popupEncoding($event, data.lang1, 'encoding1')">
+                                Encoding <i class="fa fa-caret-down"></i>
+                            </span>
+                            <span class="pointer mmml dim-button" ng-click="data.paths.sub1 = ''; updateRecentData(); reloadSubs();">Clear</span>
                         </div>
                         <div class="input-group">
                             <input type="text" placeholder="(none)"
@@ -90,7 +95,10 @@
                     <td>
                         <div class="file-field-label">
                             {{ data.languages[data.lang2] }} subtitles (optional):
-                            <span class="pointer mml dim-button" ng-click="data.paths.sub2 = ''; updateRecentData()">Clear</span>
+                            <span class="pointer mml dim-button" ng-click="popupEncoding($event, data.lang2, 'encoding2')">
+                                Encoding <i class="fa fa-caret-down"></i>
+                            </span>
+                            <span class="pointer mmml dim-button" ng-click="data.paths.sub2 = ''; updateRecentData(); reloadSubs();">Clear</span>
                         </div>
                         <div class="input-group">
                             <input type="text" placeholder="(none)"

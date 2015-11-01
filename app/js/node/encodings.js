@@ -45,10 +45,6 @@ var encodings = {
     'uk': 	 ['iso-8859-5']
 };
 
-exports.getEncoding = function(langCode){
-   if (encodings[langCode]){
-       return encodings[langCode][0];
-   } else {
-       return 'utf-8';
-   }
+exports.getEncodings = function(langCode){
+    return (encodings[langCode] || []).concat(['utf-8']);
 };

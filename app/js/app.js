@@ -6,6 +6,7 @@ var request = require('request');
 var util = require('./js/node/vl_util.js');
 var subtitle = require('./js/node/subtitle.js');
 var subsync = require('./js/node/subsync.js');
+var encodings = require('./js/node/encodings.js');
 var database = require('./js/node/database.js');
 
 var gui = require('nw.gui');
@@ -454,12 +455,12 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
     $scope.reloadSubs = function () {
         try{
             if($scope.data.paths.sub1){
-                $scope.data.subtitles.sub1 = util.loadSubtitle($scope.data.paths.sub1, $scope.data.lang1);
+                $scope.data.subtitles.sub1 = util.loadSubtitle($scope.data.paths.sub1, $scope.data.lang1, $scope.data.encoding1);
             } else {
                 delete $scope.data.subtitles.sub1;
             }
             if($scope.data.paths.sub2){
-                $scope.data.subtitles.sub2 = util.loadSubtitle($scope.data.paths.sub2, $scope.data.lang2);
+                $scope.data.subtitles.sub2 = util.loadSubtitle($scope.data.paths.sub2, $scope.data.lang2, $scope.data.encoding2);
             } else {
                 delete $scope.data.subtitles.sub2;
             }
@@ -490,6 +491,8 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         $scope.data.paths.sub2 = files.sub2;
         $scope.data.lang1 = files.lang1;
         $scope.data.lang2 = files.lang2;
+        $scope.data.encoding1 = files.encoding1;
+        $scope.data.encoding2 = files.encoding2;
         $scope.reloadMovie();
         $scope.reloadSubs();
     };
@@ -507,7 +510,10 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
             sub1: $scope.data.paths.sub1,
             sub2: $scope.data.paths.sub2,
             lang1: $scope.data.lang1,
-            lang2: $scope.data.lang2
+            lang2: $scope.data.lang2,
+            encoding1: $scope.data.encoding1,
+            encoding2: $scope.data.encoding2
+
         });
 
         // limit array length
@@ -524,6 +530,8 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
                 r.sub2 = $scope.data.paths.sub2;
                 r.lang1 = $scope.data.lang1;
                 r.lang2 = $scope.data.lang2;
+                r.encoding1 = $scope.data.encoding1;
+                r.encoding2 = $scope.data.encoding2;
                 return;
             }
         }
@@ -589,6 +597,25 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
 
     $scope.openUrl = function(url){
         gui.Shell.openExternal(url)
+    };
+
+    $scope.popupEncoding = function(evt, lang, encodingVar){
+        var menu = new gui.Menu();
+        var enc = encodings.getEncodings(lang);
+        for (var i in enc){
+            menu.append(new gui.MenuItem({
+                label: enc[i],
+                click: (function(encoding){
+                    return function(){
+                        $scope.data[encodingVar] = encoding;
+                        $scope.updateRecentData();
+                        $scope.reloadSubs();
+                    }
+                })(enc[i])
+            }));
+        }
+
+        menu.popup(evt.originalEvent.pageX, evt.originalEvent.pageY);
     };
 
     $scope.initMenu = function(){

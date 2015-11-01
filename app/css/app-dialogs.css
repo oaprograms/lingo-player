@@ -70,13 +70,13 @@
 }
 
 .recent-files{
-    margin: 30px 10px 0 0;
-    bottom: 0;
-    background-color: #ddd;
-    height: 195px;
-    padding: 15px 30px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    margin: 30px 15px 0 0;
+    /*background-color: #ddd;*/
+    height: 250px;
+    padding: 60px 15px 0 25px;
+    border-right: 1px solid #cbcbcb;
+    /*border-top-right-radius: 10px;*/
+    /*border-bottom-right-radius: 10px;*/
 }
 
 .file-field-label{
@@ -92,7 +92,7 @@
 }
 
 .langsel{
-    width: 180px;
+    width: 174px;
     display: inline-block;
 }
 .bordered{
