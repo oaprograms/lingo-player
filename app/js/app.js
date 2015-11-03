@@ -633,7 +633,7 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
                             if (!err) {
                                 if (i == 0){ // only inform about the first subtitle
                                     $scope.data.paths[subName] = dest;
-                                    $scope.data[downloadName] = {text: 'Found', 'class': 'btn-success'};
+                                    $scope.data[downloadName] = {text: 'Auto-download', 'class': 'btn-success'};
                                     $scope.updateRecentData();
                                     $scope.reloadSubs();
                                 }

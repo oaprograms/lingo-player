@@ -86,7 +86,7 @@
                             <input type="text" placeholder="(none)"
                                    ng-model="data.paths.sub1" ng-change="updateRecentData(); reloadSubs()" class="file-text-input" />
                             <span class="input-group-btn">
-                                <button class="btn btn-sm {{data.downloadSubBtnInfo1.class}}" style="margin-right: 2px"
+                                <button class="btn btn-sm {{data.downloadSubBtnInfo1.class}}" style="margin-right: 2px" ng-hide="data.paths.sub1"
                                         ng-click="downloadSubs(data.lang1, data.paths.movie, 'sub1', 'downloadSubBtnInfo1')">
                                     <i class="fa fa-download" ng-show="data.downloadSubBtnInfo1.text == 'Auto-download'"></i>&nbsp
                                     {{data.downloadSubBtnInfo1.text}}
@@ -113,7 +113,7 @@
                             <input type="text" placeholder="(none)"
                                    ng-model="data.paths.sub2" ng-change="updateRecentData(); reloadSubs()" class="file-text-input" />
                             <span class="input-group-btn">
-                                <button class="btn btn-sm {{data.downloadSubBtnInfo2.class}}" style="margin-right: 2px"
+                                <button class="btn btn-sm {{data.downloadSubBtnInfo2.class}}" style="margin-right: 2px" ng-hide="data.paths.sub2"
                                         ng-click="downloadSubs(data.lang2, data.paths.movie, 'sub2', 'downloadSubBtnInfo2')">
                                     <i class="fa fa-download" ng-show="data.downloadSubBtnInfo2.text == 'Auto-download'"></i>&nbsp
                                     {{data.downloadSubBtnInfo2.text}}
