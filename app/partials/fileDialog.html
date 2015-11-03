@@ -19,10 +19,10 @@
             <div class="recent-files">
                 <div class="mmb">
                     <b>Recent files: </b>
-                    <span class="pointer mmml dim-button" ng-click="data.recentFiles=[]" ng-show="data.recentFiles.length">Clear</span>
+                    <span class="pointer mml dim-button" ng-click="data.recentFiles=[]" ng-show="data.recentFiles.length">Clear</span>
+                    <span class="text-muted mml" ng-hide="data.recentFiles.length">None</span>
                 </div>
 
-                <div class="text-muted" ng-hide="data.recentFiles.length">None</div>
                 <div ng-repeat="recent in data.recentFiles track by $index"
                      class="item-list pointer" >
                     <a ng-click="getRecent(recent); initPlayback()" title="{{ recent.movie }}" >
@@ -60,18 +60,19 @@
                 <tr>
                     <td>
                         <div class="file-field-label"><b>Video file: </b></div>
-                        <div class="input-group">
+                        <div class="input-group mt">
                             <input type="text" placeholder="(none)"
                                    ng-model="data.paths.movie" ng-change="reloadMovie()" class="file-text-input" />
 
                             <span class="input-group-btn">
-
-                                <button class="btn btn-sm btn-success" ng-click="chooseFile('movie')"> Open... </button>
+                                <button class="btn btn-sm btn-success" ng-click="chooseFile('movie')">
+                                    <i class="fa fa-folder-open"></i>&nbsp
+                                    Open...
+                                </button>
                             </span>
                         </div>
                     </td>
                 </tr>
-
                 <tr>
                     <td>
                         <div class="file-field-label">
@@ -81,11 +82,19 @@
                             </span>
                             <span class="pointer mmml dim-button" ng-click="data.paths.sub1 = ''; updateRecentData(); reloadSubs();">Clear</span>
                         </div>
-                        <div class="input-group">
+                        <div class="input-group mt">
                             <input type="text" placeholder="(none)"
                                    ng-model="data.paths.sub1" ng-change="updateRecentData(); reloadSubs()" class="file-text-input" />
                             <span class="input-group-btn">
-                                <button class="btn btn-sm btn-success" ng-click="chooseFile('sub1')"> Open... </button>
+                                <button class="btn btn-sm {{data.downloadSubBtnInfo1.class}}" style="margin-right: 2px"
+                                        ng-click="downloadSubs(data.lang1, data.paths.movie, 'sub1', 'downloadSubBtnInfo1')">
+                                    <i class="fa fa-download" ng-show="data.downloadSubBtnInfo1.text == 'Auto-download'"></i>&nbsp
+                                    {{data.downloadSubBtnInfo1.text}}
+                                </button>
+                                <button class="btn btn-sm btn-success" ng-click="chooseFile('sub1')">
+                                    <i class="fa fa-folder-open"></i>&nbsp
+                                    Open...
+                                </button>
                             </span>
                         </div>
                     </td>
@@ -100,11 +109,19 @@
                             </span>
                             <span class="pointer mmml dim-button" ng-click="data.paths.sub2 = ''; updateRecentData(); reloadSubs();">Clear</span>
                         </div>
-                        <div class="input-group">
+                        <div class="input-group mt">
                             <input type="text" placeholder="(none)"
                                    ng-model="data.paths.sub2" ng-change="updateRecentData(); reloadSubs()" class="file-text-input" />
                             <span class="input-group-btn">
-                                <button class="btn btn-sm btn-success" ng-click="chooseFile('sub2')"> Open... </button>
+                                <button class="btn btn-sm {{data.downloadSubBtnInfo2.class}}" style="margin-right: 2px"
+                                        ng-click="downloadSubs(data.lang2, data.paths.movie, 'sub2', 'downloadSubBtnInfo2')">
+                                    <i class="fa fa-download" ng-show="data.downloadSubBtnInfo2.text == 'Auto-download'"></i>&nbsp
+                                    {{data.downloadSubBtnInfo2.text}}
+                                </button>
+                                <button class="btn btn-sm btn-success" ng-click="chooseFile('sub2')">
+                                    <i class="fa fa-folder-open"></i>&nbsp
+                                    Open...
+                                </button>
                             </span>
                         </div>
                     </td>
@@ -115,9 +132,11 @@
         <div class="clearfix"></div>
 
         <div class="text-center">
-            <span ng-class="{'green':data.subtitles.match>0.5, 'red':data.subtitles.match<=0.5}"
+            <span ng-class="{'green':data.subtitles.match>0.65, 'red':data.subtitles.match<=0.65}"
                   ng-show="data.subtitles.match" style="margin-right: 20px;">
                 Subtitles match: {{ data.subtitles.match | percentage:0 }}
+                <span ng-show="data.subtitles.match>0.65">(good)</span>
+                <span ng-show="data.subtitles.match<=0.65">(bad)</span>
             </span>
             <button class="btn btn-success btn-lg" ng-click="initPlayback()" style="padding: 10px 30px;">
                 <i class="icon-play"></i> Play

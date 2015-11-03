@@ -24,7 +24,7 @@ var loadFile = function(path, langCode, explicit_encoding){
 exports.detectFormat = function(path){
     var pathArr =  path.toLowerCase().split('.');
     var extension = pathArr.pop();
-    if (extension == 'srt' || extension == 'sub'){
+    if (extension == 'srt' || extension == 'sub' || extension == 'txt'){
         return {
             type: 'subtitle',
             extension: extension

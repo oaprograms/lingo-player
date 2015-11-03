@@ -106,14 +106,11 @@ exports.alignSubs = function(sub1, sub2, sync){
     for(var ii in sub2Copy.data){
         sub2Copy.data[ii].subtitle.start *= sync.k;
         sub2Copy.data[ii].subtitle.start += sync.n;
-//        sub2Copy.data[ii].subtitle.text = ii;
     }
     if(sub1.data && sub2.data){
         var stats = tryAndAlign(sub1Copy.data, sub2Copy.data, 0, 0, 0, 0, pairs);
     }
-//    for(var ii in sub2Copy.data){
-//        console.log(sub2Copy.data[ii].subtitle.text);
-//    }
+
     // update ids
     if(sub1.data){
         for(var i = 0; i < sub1Copy.data.length; i++){
