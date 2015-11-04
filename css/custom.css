@@ -1,0 +1,22 @@
+#owl img{
+    width: 100%;
+}
+@media screen and (min-width: 1200px) {
+    .banner h1{ margin-top: 45px; }
+}
+@media screen and (max-width: 1199px) {
+    .banner h1{ margin-top: 25px; }
+}
+@media screen and (max-width: 992px) {
+    .banner h1{ margin-top: 10px; }
+}
+.banner .container{
+    padding: 20px 0;
+}
+
+.feature{
+    min-height: 200px;
+}
+#version{
+    padding: 5px; font-size: 18px;
+}

@@ -1,8 +1,8 @@
 $(document).ready(function() {
-
-    $("#owl").owlCarousel({
+	$("#owl").owlCarousel({
         singleItem: true,
-        autoPlay: 3000
+        autoPlay: 4000,
+        autoWidth:true,
+        autoHeight:true
     });
-
 });
