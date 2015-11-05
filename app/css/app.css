@@ -17,7 +17,6 @@ body {
 .vl-container{
     /*padding: 0 370px 150px 0;*/
     height: 100%;
-    background-color: #dcdcdc;
     overflow: hidden;
 }
 #player {
@@ -66,9 +65,6 @@ body {
     position: absolute;
     margin: auto;
     left: 0; right: 0; top: 0; bottom: 0;
-    width: 150px;
-    height: 150px;
-    z-index: 5;
 }
 
 

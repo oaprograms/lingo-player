@@ -12,13 +12,29 @@
     <link href="css/awesome-bootstrap-checkbox.css" rel="stylesheet">
     <link href="css/app-dict.css" rel="stylesheet">
     <link href="css/app-utility.css" rel="stylesheet">
+    <link href="css/loading.css" rel="stylesheet">
     <link href="css/app-dialogs.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
 
 </head>
-<body ng-controller="mainCtrl" autofocus>
+<body ng-controller="mainCtrl">
 
-<div ng-show="data.dialog" class="dim-background" ng-click="data.dialog = null">
+<div class="center" style="height: 350px; text-align: center; font-size: 20px; color: #000000; z-index: -5;">
+    <div class="sk-cube-grid">
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
+    </div>
+    <div>Loading...</div>
+</div>
+
+<div ng-show="data.dialog" class="dim-background" ng-click="data.dialog = null" ng-cloak>
     <div ng-if="data.dialog == 'file'" ng-include="'partials/fileDialog.html'" stop-event="click"></div>
     <div ng-if="data.dialog == 'subs'" ng-include="'partials/subsDialog.html'" stop-event="click"></div>
     <div ng-if="data.dialog == 'words'" ng-include="'partials/wordsDialog.html'" stop-event="click"></div>
@@ -42,7 +58,7 @@
     </div>
     <!--</div>-->
 
-    <div class="center" ng-hide="data.paths.movie" ng-cloak>
+    <div class="center" style="width: 150px; height: 150px; z-index: 5;" ng-hide="data.paths.movie" ng-cloak>
         <img src="img/logo.png" style="width:150px; height:150px;" alt=""/>
     </div>
 
@@ -92,7 +108,6 @@
     </div>
 
 </div>
-
 
 <!--------------------------  Utility controls  ------------------------------------>
 
