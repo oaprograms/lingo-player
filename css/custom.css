@@ -1,3 +1,6 @@
+body{
+    font-size: 16px;
+}
 #owl img{
     width: 100%;
 }
@@ -19,4 +22,20 @@
 }
 #version{
     padding: 5px; font-size: 18px;
+}
+.footer-top{
+    padding: 30px 60px;
+}
+.faq{
+    padding: 45px;
+    text-align: left;
+}
+.faq-question{
+    color: white;
+    font-weight: 600;
+    padding-bottom: 25px;
+    font-size: 18px;
+}
+.faq-answer{
+    color: #d0d0d0;
 }
