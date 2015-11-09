@@ -35,7 +35,8 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         // list of languages supported by Google Translate
         languages: {"af": "Afrikaans", "sq": "Albanian", "ar": "Arabic", "hy": "Armenian", "az": "Azerbaijani", "eu": "Basque", "be": "Belarusian", "bn": "Bengali", "bs": "Bosnian", "bg": "Bulgarian", "ca": "Catalan", "ceb": "Cebuano", "ny": "Chichewa", "zh-CN": "Chinese", "hr": "Croatian", "cs": "Czech", "da": "Danish", "nl": "Dutch", "en": "English", "eo": "Esperanto", "et": "Estonian", "tl": "Filipino", "fi": "Finnish", "fr": "French", "gl": "Galician", "ka": "Georgian", "de": "German", "el": "Greek", "gu": "Gujarati", "ht": "Haitian Creole", "ha": "Hausa", "iw": "Hebrew", "hi": "Hindi", "hmn": "Hmong", "hu": "Hungarian", "is": "Icelandic", "ig": "Igbo", "id": "Indonesian", "ga": "Irish", "it": "Italian", "ja": "Japanese", "jw": "Javanese", "kn": "Kannada", "kk": "Kazakh", "km": "Khmer", "ko": "Korean", "lo": "Lao", "la": "Latin", "lv": "Latvian", "lt": "Lithuanian", "mk": "Macedonian", "mg": "Malagasy", "ms": "Malay", "ml": "Malayalam", "mt": "Maltese", "mi": "Maori", "mr": "Marathi", "mn": "Mongolian", "my": "Myanmar (Burmese)", "ne": "Nepali", "no": "Norwegian", "fa": "Persian", "pl": "Polish", "pt": "Portuguese", "pa": "Punjabi", "ro": "Romanian", "ru": "Russian", "sr": "Serbian", "st": "Sesotho", "si": "Sinhala", "sk": "Slovak", "sl": "Slovenian", "so": "Somali", "es": "Spanish", "su": "Sundanese", "sw": "Swahili", "sv": "Swedish", "tg": "Tajik", "ta": "Tamil", "te": "Telugu", "th": "Thai", "tr": "Turkish", "uk": "Ukrainian", "ur": "Urdu", "uz": "Uzbek", "vi": "Vietnamese", "cy": "Welsh", "yi": "Yiddish", "yo": "Yoruba", "zu": "Zulu"},
         languageList: [{code: "af", name: "Afrikaans"},{ code: "sq", name: "Albanian"},{ code: "ar", name: "Arabic"},{ code: "hy", name: "Armenian"},{ code: "az", name: "Azerbaijani"},{ code: "eu", name: "Basque"},{ code: "be", name: "Belarusian"},{ code: "bn", name: "Bengali"},{ code: "bs", name: "Bosnian"},{ code: "bg", name: "Bulgarian"},{ code: "ca", name: "Catalan"},{ code: "ceb", name: "Cebuano"},{ code: "ny", name: "Chichewa"},{ code: "zh-CN", name: "Chinese"},{ code: "hr", name: "Croatian"},{ code: "cs", name: "Czech"},{ code: "da", name: "Danish"},{ code: "nl", name: "Dutch"},{ code: "en", name: "English"},{ code: "eo", name: "Esperanto"},{ code: "et", name: "Estonian"},{ code: "tl", name: "Filipino"},{ code: "fi", name: "Finnish"},{ code: "fr", name: "French"},{ code: "gl", name: "Galician"},{ code: "ka", name: "Georgian"},{ code: "de", name: "German"},{ code: "el", name: "Greek"},{ code: "gu", name: "Gujarati"},{ code: "ht", name: "Haitian Creole"},{ code: "ha", name: "Hausa"},{ code: "iw", name: "Hebrew"},{ code: "hi", name: "Hindi"},{ code: "hmn", name: "Hmong"},{ code: "hu", name: "Hungarian"},{ code: "is", name: "Icelandic"},{ code: "ig", name: "Igbo"},{ code: "id", name: "Indonesian"},{ code: "ga", name: "Irish"},{ code: "it", name: "Italian"},{ code: "ja", name: "Japanese"},{ code: "jw", name: "Javanese"},{ code: "kn", name: "Kannada"},{ code: "kk", name: "Kazakh"},{ code: "km", name: "Khmer"},{ code: "ko", name: "Korean"},{ code: "lo", name: "Lao"},{ code: "la", name: "Latin"},{ code: "lv", name: "Latvian"},{ code: "lt", name: "Lithuanian"},{ code: "mk", name: "Macedonian"},{ code: "mg", name: "Malagasy"},{ code: "ms", name: "Malay"},{ code: "ml", name: "Malayalam"},{ code: "mt", name: "Maltese"},{ code: "mi", name: "Maori"},{ code: "mr", name: "Marathi"},{ code: "mn", name: "Mongolian"},{ code: "my", name: "Myanmar (Burmese)"},{ code: "ne", name: "Nepali"},{ code: "no", name: "Norwegian"},{ code: "fa", name: "Persian"},{ code: "pl", name: "Polish"},{ code: "pt", name: "Portuguese"},{ code: "pa", name: "Punjabi"},{ code: "ro", name: "Romanian"},{ code: "ru", name: "Russian"},{ code: "sr", name: "Serbian"},{ code: "st", name: "Sesotho"},{ code: "si", name: "Sinhala"},{ code: "sk", name: "Slovak"},{ code: "sl", name: "Slovenian"},{ code: "so", name: "Somali"},{ code: "es", name: "Spanish"},{ code: "su", name: "Sundanese"},{ code: "sw", name: "Swahili"},{ code: "sv", name: "Swedish"},{ code: "tg", name: "Tajik"},{ code: "ta", name: "Tamil"},{ code: "te", name: "Telugu"},{ code: "th", name: "Thai"},{ code: "tr", name: "Turkish"},{ code: "uk", name: "Ukrainian"},{ code: "ur", name: "Urdu"},{ code: "uz", name: "Uzbek"},{ code: "vi", name: "Vietnamese"},{ code: "cy", name: "Welsh"},{ code: "yi", name: "Yiddish"},{ code: "yo", name: "Yoruba"},{ code: "zu", name: "Zulu"}],
-        languageMap: {"ceb":"ceb","zh-CN":"chi","jw":"jav", "hmn":"hmn", "iw":"heb","az": "aze", "el": "gre", "gu": "guj", "en": "eng", "af": "afr", "vi": "vie", "ca": "cat", "eo": "epo", "ne": "nep", "cs": "cze", "cy": "wel", "hy":"arm", "km": "khm", "ga": "gle", "zu": "zul", "eu": "baq", "et": "est", "gl": "glg", "id": "ind", "es": "spa", "ru": "rus", "ha": "hau", "nl": "dut","pt": "por", "la": "lat", "ko": "kor", "lo": "lao", "tr": "tur", "tl": "tgl", "sv": "swe", "lv": "lav", "ny": "nya", "lt": "lit", "pa": "pan", "ig": "ibo", "th": "tha", "it": "ita", "tg": "tgk", "te": "tel", "is": "ice", "pl": "pol", "ta": "tam", "yi": "yid", "be": "bel", "fr": "fre", "bg": "bul", "uk": "ukr", "yo": "yor", "sl": "slv", "hr": "hrv", "st": "sot", "bn": "ben", "de": "ger", "ka": "geo", "ht": "hat", "da": "dan", "fa": "per", "hi": "hin", "no": "nor", "bs": "bos", "fi": "fin", "hu": "hun", "ja": "jpn", "su": "sun", "mg": "mlg", "ro": "rum", "si": "sin", "uz": "uzb", "kk": "kaz", "ml": "mal", "sq": "alb", "mn": "mon", "mi": "mao", "kn": "kan", "mk": "mac", "ur": "urd", "sk": "slo", "mt": "mlt", "sr": "srp", "ar": "ara", "so": "som", "ms": "may", "mr": "mar", "my": "bur", "sw": "swa"},
+        // languageMap: {google translate language codes : opensubtitles language codes}
+        languageMap: {"gu": "guj", "ga": "gle", "gl": "glg", "la": "lat", "lo": "lao", "tr": "tur", "lv": "lav", "tl": "tgl", "th": "tha", "tg": "tgk", "te": "tel", "ta": "tam", "yi": "yid", "ceb": "ceb", "yo": "yor", "de": "ger", "da": "dan", "el": "ell", "eo": "epo", "en": "eng", "eu": "baq", "zu": "zul", "es": "spa", "ru": "rus", "zh-CN": "chi", "ro": "rum", "be": "bel", "bg": "bul", "ms": "may", "bn": "ben", "jw": "jav", "bs": "bos", "ja": "jpn", "ca": "cat", "cy": "wel", "cs": "cze", "pt": "por", "lt": "lit", "pa": "pan", "pl": "pol", "hy": "arm", "hr": "hrv", "ht": "hat", "hu": "hun", "hmn": "hmn", "hi": "hin", "ha": "hau", "mg": "mlg", "uz": "uzb", "ml": "mal", "mn": "mon", "mi": "mao", "mk": "mac", "ur": "urd", "mt": "mlt", "uk": "ukr", "mr": "mar", "my": "bur", "af": "afr", "vi": "vie", "is": "ice", "it": "ita", "iw": "heb", "kn": "kan", "ar": "ara", "su": "sun", "et": "est", "az": "aze", "id": "ind", "ig": "ibo", "nl": "dut", "no": "nor", "ne": "nep", "ny": "nya", "fr": "fre", "fa": "per", "fi": "fin", "ka": "geo", "kk": "kaz", "sr": "scc", "sq": "alb", "ko": "kor", "sv": "swe", "km": "khm", "st": "sot", "sk": "slo", "si": "sin", "so": "som", "sl": "slv", "sw": "swa"},
         // show dialog (initially show file dialog)
         dialog: 'file', // 'file', 'subs', 'shortcuts', 'about', null
         // selected file paths
@@ -607,27 +608,22 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         gui.Shell.openExternal(url)
     };
 
-    // download subtitles automatically, put them in movie file name + '.subtitles-[language].ext'
+    // download subtitles automatically, put them in movie file name + '.subs' folder
     $scope.downloadSubs = function(language, moviePath, subName, downloadName){
         var path = require('path');
-        var OS = require('opensubtitles-api');
-        var os = new OS('OSTestUserAgent'); //todo: change
+        var fs = require('fs');
         $scope.data[downloadName] = {text: 'Searching...', 'class': 'btn-info'};
-        os.search({
-            sublanguageid: $scope.data.languageMap[language],
-            path: moviePath,
-            filename: path.basename(moviePath),
-            extensions: ['srt', 'txt', 'sub'],
-            limit: '3'
-        }).then(function (subtitles) {
-            if (! subtitles[language] || ! subtitles[language].length){
+        downloader.searchSubsExtendByImdbID($scope.data.languageMap[language], moviePath, ['srt', 'txt', 'sub'], 6, function(urls){
+            if(!urls.length){
                 $scope.data[downloadName] = {text: 'Not found', 'class': ''};
-            } else {
-                // download several versions of subtitles, but set only the first one
-                for(var index = 0; index < subtitles[language].length; index++){
-                    (function(i) {
-                        var url = subtitles[language][i].url;
-                        var dest = moviePath + '.subtitles-' + language + (i ? '-alternative-' + i  : '') + '.' + url.split('.').pop();
+            }
+            // download several versions of subtitles, but set only the first one
+            for(var index = 0; index < urls.length; index++){
+                (function(i) {
+                    var url = urls[i];
+                    // make a directory if it doesn't exist
+                    fs.mkdir(moviePath + '.subs', function(){
+                        var dest = path.join(moviePath + '.subs', language + (i ? '-alternative-' + i  : '') + '.' + url.split('.').pop());
                         if (i == 0) $scope.data[downloadName] = {text: 'Downloading...', 'class': 'btn-info'};
                         downloader.download(url, dest, function (err) {
                             if (!err) {
@@ -642,10 +638,11 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
                                 console.log(err);
                             }
                         });
-                    })(index);
-                }
+                    });
+                })(index);
             }
         });
+
     };
 
     // make encoding selector popup menu
