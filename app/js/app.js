@@ -191,6 +191,8 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
                 $scope.data.playerInfo.subMouseEntered = true;
             }
             $scope.player.pause();
+        } else {
+            $scope.data.playerInfo.wasPlaying = false;
         }
     };
 
@@ -551,7 +553,10 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
 
         if ($scope.fileDialogFileType == 'movie'){
             $scope.data.paths.movie = path;
+            $scope.data.paths.sub1 = '';
+            $scope.data.paths.sub2 = '';
             $scope.reloadMovie();
+            $scope.reloadSubs();
             $scope.updateRecentMovie();
         } else {
             $scope.data.paths[$scope.fileDialogFileType] = path;

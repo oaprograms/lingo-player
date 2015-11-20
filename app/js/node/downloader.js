@@ -22,12 +22,11 @@ exports.download = function(url, dest, cb) {
     });
 };
 
-
 var compactSubtitleUrls = function(urls, limit){
     var final_urls = [];
     for (var u in urls) {
         if (final_urls.length >= limit) break;
-        var url = urls[u].url;
+        var url = urls[u];
         if (final_urls.indexOf(url) == -1) {
             final_urls.push(url);
         }
@@ -51,20 +50,27 @@ exports.searchSubsExtendByImdbID = function(language, moviePath, extensions, lim
                     imdbid = info2.data[moviehash].MovieImdbID;
                 }
                 // search by both hash and imdbid
-                os.search({
-                    limit: '12',
-                    hash: moviehash,
-                    filesize: moviebytesize,
+                os.api.SearchSubtitles(token, [{
+                    moviehash: moviehash,
+                    moviebytesize: moviebytesize,
+                    sublanguageid: language
+                },{
                     sublanguageid: language,
-                    imdbid: imdbid,
-                    extensions: extensions
-                }).then(function(results){
-                    for(langCode in results){
-                        if (results.hasOwnProperty(langCode)){
-                            var ret = compactSubtitleUrls(results[langCode], limit);
-                            cb(ret);
-                            break;
+                    imdbid: imdbid
+                }], {limit: 20}).then(function(results){
+                    if(results.data && results.data.length){
+                        var ret = [];
+                        for (var i in results.data){
+                            var sub = results.data[i];
+                            // if the format is supported
+                            if(extensions.indexOf(sub.SubFormat.toLowerCase()) > -1){
+                                // add the link
+                                ret.push(sub.SubDownloadLink.replace('.gz', '.'+sub.SubFormat));
+                            }
                         }
+                        cb(compactSubtitleUrls(ret, limit));
+                    } else {
+                        cb([]);
                     }
                 });
             });

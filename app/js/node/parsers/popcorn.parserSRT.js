@@ -48,51 +48,55 @@ exports.parseSRT = function( data, options ) {
     endIdx = lastNonEmptyLine( lines ) + 1;
 
     for( i=0; i < endIdx; i++ ) {
-      sub = {};
-      text = [];
+        try {
+            sub = {};
+            text = [];
 
-      i = nextNonEmptyLine( lines, i );
-      sub.id = parseInt( lines[i++], 10 );
+            i = nextNonEmptyLine(lines, i);
+            sub.id = parseInt(lines[i++], 10);
 
-      // Split on '-->' delimiter, trimming spaces as well
-      time = lines[i++].split( /[\t ]*-->[\t ]*/ );
+            // Split on '-->' delimiter, trimming spaces as well
+            time = lines[i++].split(/[\t ]*-->[\t ]*/);
 
-      sub.start = toSeconds( time[0] );
+            sub.start = toSeconds(time[0]);
 
-      // So as to trim positioning information from end
-      idx = time[1].indexOf( " " );
-      if ( idx !== -1) {
-        time[1] = time[1].substr( 0, idx );
-      }
-      sub.end = toSeconds( time[1] );
+            // So as to trim positioning information from end
+            idx = time[1].indexOf(" ");
+            if (idx !== -1) {
+                time[1] = time[1].substr(0, idx);
+            }
+            sub.end = toSeconds(time[1]);
 
-      // Build single line of text from multi-line subtitle in file
-      while ( i < endIdx && lines[i] ) {
-        text.push( lines[i++] );
-      }
+            // Build single line of text from multi-line subtitle in file
+            while (i < endIdx && lines[i]) {
+                text.push(lines[i++]);
+            }
 
-      // Join into 1 line, SSA-style linebreaks
-      // Strip out other SSA-style tags
-      sub.text = text.join( "\\N" ).replace( /\{(\\[\w]+\(?([\w\d]+,?)+\)?)+\}/gi, "" );
+            // Join into 1 line, SSA-style linebreaks
+            // Strip out other SSA-style tags
+            sub.text = text.join("\\N").replace(/\{(\\[\w]+\(?([\w\d]+,?)+\)?)+\}/gi, "");
 
-      // Escape HTML entities
-      sub.text = sub.text.replace( /</g, "&lt;" ).replace( />/g, "&gt;" );
+            // Escape HTML entities
+            sub.text = sub.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-      // Unescape great than and less than when it makes a valid html tag of a supported style (font, b, u, s, i)
-      // Modified version of regex from Phil Haack's blog: http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx
-      // Later modified by kev: http://kevin.deldycke.com/2007/03/ultimate-regular-expression-for-html-tag-parsing-with-php/
-      //sub.text = sub.text.replace( /&lt;(\/?(font|b|u|i|s))((\s+(\w|\w[\w\-]*\w)(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)(\/?)&gt;/gi, "<$1$3$7>" );
-      //sub.text = sub.text.replace( /\\N/gi, "<br />" );
+            // Unescape great than and less than when it makes a valid html tag of a supported style (font, b, u, s, i)
+            // Modified version of regex from Phil Haack's blog: http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx
+            // Later modified by kev: http://kevin.deldycke.com/2007/03/ultimate-regular-expression-for-html-tag-parsing-with-php/
+            //sub.text = sub.text.replace( /&lt;(\/?(font|b|u|i|s))((\s+(\w|\w[\w\-]*\w)(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)(\/?)&gt;/gi, "<$1$3$7>" );
+            //sub.text = sub.text.replace( /\\N/gi, "<br />" );
 
 
-      // actually, strip all html tags (ognjen's mod)
-      sub.text = sub.text.replace( /&lt;(\/?(font|b|u|i|s))((\s+(\w|\w[\w\-]*\w)(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)(\/?)&gt;/gi, "" );
-      sub.text = sub.text.replace( /\\N/gi, " " );
-      if ( options && options[ "target" ] ) {
-        sub.target = options[ "target" ];
-      }
-  
-      subs.push( createTrack( "subtitle", sub ) );
+            // actually, strip all html tags (ognjen's mod)
+            sub.text = sub.text.replace(/&lt;(\/?(font|b|u|i|s))((\s+(\w|\w[\w\-]*\w)(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)(\/?)&gt;/gi, "");
+            sub.text = sub.text.replace(/\\N/gi, " ");
+            if (options && options["target"]) {
+                sub.target = options["target"];
+            }
+
+            subs.push(createTrack("subtitle", sub));
+        } catch (e){
+            console.log('invalid sub row: ', i)
+        }
     }
 
     retObj.data = subs;
