@@ -269,7 +269,7 @@ ul li {
   background-size: cover; }
 
 .banner-text {
-  padding-top: 50px; }
+  padding-top: 8px; }
   .banner-text h1 {
     color: #fff;
     font-family: "Open Sans", sans-serif;
@@ -280,6 +280,12 @@ ul li {
     font-size: 22px;
     font-weight: 300;
     line-height: 1.5; }
+  a.banner-link {
+    color: #aaaaaa;
+  }
+  a.banner-link:hover, a.banner-link:focus {
+    color: #ffffff;
+  }
 
 /* ==========================================================================
 	$Features
