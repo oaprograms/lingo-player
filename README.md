@@ -39,10 +39,6 @@ Anyone is very welcome to contribute to this project. In case you are interested
 
 **Planned features in future (help is welcome):**
 
-- Auto-download subtitles from OpenSubtitles
-- Make Lingo Player homepage, video tutorial
-- Support more subtitle formats (currently supports .srt and .sub)
-- Auto-detect subtitle encoding (find a good library for this)
 - Make OSX version
 - Add more dictionary sources
 - Lemmatization / stemming?
@@ -51,10 +47,10 @@ Anyone is very welcome to contribute to this project. In case you are interested
 
 ## Screenshots
 
-![Main screen](http://oaprograms.github.io/lingo-player/images/screenshots/1.png)
-![Words dialog](http://oaprograms.github.io/lingo-player/images/screenshots/3.png)
-![File dialog](http://oaprograms.github.io/lingo-player/images/screenshots/4.png)
 ![Main screen](http://oaprograms.github.io/lingo-player/images/screenshots/2.png)
+![Words dialog](http://oaprograms.github.io/lingo-player/images/screenshots/1.png)
+![File dialog](http://oaprograms.github.io/lingo-player/images/screenshots/3.png)
+![Main screen](http://oaprograms.github.io/lingo-player/images/screenshots/5.png)
 
 ## Licence
 
