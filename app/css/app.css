@@ -206,6 +206,7 @@ i{
     padding: 5px 0 12px 0;
     color: rgba(255,255,255,0.3);
     opacity: 0;
+    font-size: 0;
 }
 .down-content:hover > .sub-buttons{
     opacity: 1;
@@ -217,22 +218,22 @@ i{
     padding: 10px;
 }
 .sub-button{
-    font-size: 1.35em;
+    font-size: 18px;
     display: inline-block;
     cursor: pointer;
     color: black;
     background-color: rgba(255,255,255,0.3);
     /*border-radius: 35px;*/
-    padding: 4px 18px;
-    margin: 5px -1px;
+    padding: 4px 15px;
+    margin: 5px 0 5px 1px;
 }
 .sub-buttons .sub-button:first-child{
-    padding: 4px 35px;
+    padding: 4px 28px;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
 }
 .sub-buttons .sub-button:last-child{
-    padding: 4px 35px;
+    padding: 4px 28px;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
 }

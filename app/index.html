@@ -46,13 +46,6 @@
 
 <div class="vl-container" ng-cloak>
 
-    <!--Google translate invisible iframe-->
-    <!--For words-->
-    <iframe id="iframe" src="https://translate.google.com/#en/en/" frameborder="0"></iframe>
-    <!--For phrases-->
-    <iframe id="iframe2" src="https://translate.google.com/#en/en/" frameborder="0"></iframe>
-
-
     <div class="player-button" ng-click="showDialog('words')" ng-show="data.playerInfo.showControls && ! data.dialog" ng-cloak>
         <i class="glyphicon glyphicon-search"></i> <span> Saved Words</span>
     </div>
@@ -75,11 +68,7 @@
             <!--buttons-->
             <div class="sub-buttons"  >
                 <span class="sub-button" ng-click="playPrevSub()" title="Jump to the previous subtitle"><i class="fa fa-chevron-left"></i></span>
-                <span class="sub-button b-red" ng-click="playWord(false, 'iframe2')" ng-show="data.playerInfo.showSub1" title="Listen"
-                      ng-mousemove="translatePhrase(data.currentSub1.text, data.lang1, data.lang2)" ><i class="fa fa-volume-up"></i></span>
-                <span class="sub-button b-red" ng-show="data.playerInfo.showSub1" title="Auto-translate"
-                      uib-popover-template="'partials/popover-phrase.html'" popover-trigger="mouseenter" popover-popup-delay="300"
-                      ng-mousemove="translatePhrase(data.currentSub1.text, data.lang1, data.lang2)" ><i class="fa fa-comment"></i></span>
+                <span class="sub-button b-red" ng-click="replayCurrentSub()" ng-show="data.playerInfo.showSub1" title="Replay this subtitle"><i class="fa fa-repeat"></i></span>
                 <span  class="sub-button b-green" ng-click="saveAllWords(4);" ng-show="data.playerInfo.showSub1" title="Mark all words as known">
                     <i class="fa fa-check"></i>
                 </span>
@@ -93,7 +82,7 @@
                         ng-if="word.isWord" class="pointer level{{word.level}}"
                      ng-mouseenter="define(word, data.lang1, data.lang2)"
                      uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300"
-                     ng-mousedown="changeWordLevel(word, $event.button != 0); highlightWords(data.currentSub1); playWord(true);">{{ word.text }}</span><span
+                     ng-mousedown="changeWordLevel(word, $event.button != 0); highlightWords(data.currentSub1);">{{ word.text }}</span><span
                         ng-if="! word.isWord">{{ word.text }}</span></span>
             </div>
             <!--2nd subtitle-->

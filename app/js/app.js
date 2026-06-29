@@ -110,27 +110,6 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
     // word database
     $scope.db = database.openDatabase(gui);
 
-    // plays word using google translate TTS (triggers click inside iframe)
-    $scope.playWord = function(fromSubs, target){
-        if(fromSubs && $scope.data.config.dontPlayWordOnClick) return;
-
-        $timeout(function(){
-            function triggerMouseEvent (node, eventType) {
-                var clickEvent = document.createEvent ('MouseEvents');
-                clickEvent.initEvent (eventType, true, true);
-                node.dispatchEvent (clickEvent);
-            }
-
-            var targetNode = document.getElementById(target ? target : 'iframe')
-                .contentDocument.getElementById('gt-src-listen');
-            triggerMouseEvent (targetNode, "mouseover");
-            triggerMouseEvent (targetNode, "mousedown");
-            triggerMouseEvent (targetNode, "mouseup");
-            triggerMouseEvent (targetNode, "click");
-        }, 200);
-    };
-
-
     $scope.hidePopover = function(){
         $(".popover").remove();
         //$(".file-dialog .ui-select-search").attr('placeholder', 'Search');
@@ -251,16 +230,6 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         $scope.data.dialog = dialogName;
     };
 
-    // scrape the phrase (full-subtitle) translation from the second Google iframe
-    $scope.scrapeGoogleTranslateFromIFrame = function(){
-        try {
-            var $iframe2 = $('#iframe2');
-            $scope.data.phraseTranslation =  $($($iframe2.contents()).find("#result_box")).last().text() || '';
-        } catch(e){
-            $scope.data.phraseTranslation = '';
-        }
-    };
-
     // fix popover position
     $scope.fixPopoverPosition = function(){
         var $popover = $('.popover');
@@ -282,36 +251,16 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         }
     };
 
-    $scope.translatePhrase = function(phrase, sourceLang, targetLang){
-        if(phrase) {
-            var phraseUrl = 'https://translate.google.com/#' + sourceLang + '/' + targetLang + '/' + encodeURIComponent(phrase);
-            if (!$scope.data.phraseUrl || $scope.data.phraseUrl != phraseUrl) {
-                $scope.data.phraseUrl = phraseUrl;
-                $('#iframe2').attr('src', phraseUrl);
-                $scope.observeIframes();
-            }
-        }
-    };
-
     function escapeHtml(str){
         return String(str)
             .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    // translate word: fetch translations from dioco-base (Gemini), and load the
-    // word into the hidden Google iframe so the "Listen" TTS keeps working
+    // translate word: fetch translations from dioco-base (Gemini)
     $scope.define = function (word, sourceLang, targetLang) {
         if (!word || !word.text) return;
         var text = word.text.toLowerCase();
-
-        // load word into hidden iframe for TTS playback
-        var url = $scope.data.translateUrl = 'https://translate.google.com/#' + sourceLang + '/' + targetLang + '/' + encodeURIComponent(text);
-        $timeout(function(){
-            if($scope.data.translateUrl == url){
-                $('#iframe').attr('src', url);
-            }
-        }, 150);
 
         // show the word immediately while the translation loads ('...' placeholder)
         $scope.data.wordDefinition = {
@@ -361,18 +310,6 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
             });
         });
     };
-    $scope.observeIframes = function() {
-        // observe iframe changes by dirty checking (I think there's no event for that)
-        $timeout($scope.scrapeGoogleTranslateFromIFrame, 50);
-        $timeout($scope.scrapeGoogleTranslateFromIFrame, 100);
-        $timeout($scope.scrapeGoogleTranslateFromIFrame, 150);
-        $timeout($scope.scrapeGoogleTranslateFromIFrame, 200);
-        $timeout($scope.scrapeGoogleTranslateFromIFrame, 300);
-        $timeout($scope.scrapeGoogleTranslateFromIFrame, 500);
-        $timeout($scope.scrapeGoogleTranslateFromIFrame, 1000);
-        $timeout($scope.scrapeGoogleTranslateFromIFrame, 2000);
-    };
-
     $scope.getUniqueLanguagePairs = function () {
         $scope.data.languagePair = {
             lang1: $scope.data.lang1,
