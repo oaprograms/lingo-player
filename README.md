@@ -41,8 +41,6 @@ repo, so there are no machine-specific paths to configure.
 Notes:
 - The app pins old, consistent versions (NW.js 0.12.3, WebChimera VLC binding,
   and a few transitive deps) because it predates modern Node/Chromium.
-- Subtitle auto-download is disabled (the OpenSubtitles XML-RPC API it used was
-  retired in 2024); everything else — playback, dictionary, saved words — works.
 
 ## Building a portable release (Windows)
 

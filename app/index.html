@@ -92,7 +92,7 @@
                 <span ng-repeat="word in data.currentSub1.words"><span
                         ng-if="word.isWord" class="pointer level{{word.level}}"
                      ng-mouseenter="define(word, data.lang1, data.lang2)"
-                     uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300" popover-animation="false"
+                     uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300"
                      ng-mousedown="changeWordLevel(word, $event.button != 0); highlightWords(data.currentSub1); playWord(true);">{{ word.text }}</span><span
                         ng-if="! word.isWord">{{ word.text }}</span></span>
             </div>
@@ -100,7 +100,7 @@
             <div class="subtitle subtitle2" ng-show="data.playerInfo.showSub2"><span
                     ng-repeat="word in data.currentSub2.words"><span ng-if="word.isWord" class="pointer"
                       ng-mouseenter="define(word, data.lang2, data.lang1)"
-                      uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300" popover-animation="false"
+                      uib-popover-template="'partials/popover.html'" popover-trigger="mouseenter" popover-popup-delay="300"
                       >{{ word.text }}</span><span
                         ng-if="! word.isWord">{{ word.text }}</span></span>
             </div>

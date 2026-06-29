@@ -313,10 +313,10 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
             }
         }, 150);
 
-        // show the word immediately while the translation loads
+        // show the word immediately while the translation loads ('...' placeholder)
         $scope.data.wordDefinition = {
             original: text,
-            translation: '',
+            translation: '...',
             dictionary: $sce.trustAsHtml('')
         };
 
@@ -345,7 +345,7 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
             var alternatives = translations.slice(1)
                 .map(function(t, i){
                     var c = Math.min(45 + i * 45, 130);
-                    return '<div style="text-align:center; font-weight:bold; font-size:16px; color:rgb('
+                    return '<div style="text-align:center; font-weight:600; font-size:16px; color:rgb('
                         + c + ',' + c + ',' + c + ');">' + escapeHtml(t) + '</div>';
                 }).join('');
 
@@ -643,17 +643,17 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         var path = require('path');
         var fs = require('fs');
         $scope.data[downloadName] = {text: 'Searching...', 'class': 'btn-info'};
-        downloader.searchSubsExtendByImdbID($scope.data.languageMap[language], moviePath, ['srt', 'txt', 'sub'], 6, function(urls){
-            if(!urls.length){
+        downloader.searchSubsExtendByImdbID($scope.data.languageMap[language], moviePath, ['srt', 'txt', 'sub'], 6, function(results){
+            if(!results.length){
                 $scope.data[downloadName] = {text: 'Not found', 'class': ''};
             }
             // download several versions of subtitles, but set only the first one
-            for(var index = 0; index < urls.length; index++){
+            for(var index = 0; index < results.length; index++){
                 (function(i) {
-                    var url = urls[i];
+                    var url = results[i].url;
                     // make a directory if it doesn't exist
                     fs.mkdir(moviePath + '.subs', function(){
-                        var dest = path.join(moviePath + '.subs', language + (i ? '-alternative-' + i  : '') + '.' + url.split('.').pop());
+                        var dest = path.join(moviePath + '.subs', language + (i ? '-alternative-' + i  : '') + '.' + (results[i].format || 'srt'));
                         if (i == 0) $scope.data[downloadName] = {text: 'Downloading...', 'class': 'btn-info'};
                         downloader.download(url, dest, function (err) {
                             if (!err) {
