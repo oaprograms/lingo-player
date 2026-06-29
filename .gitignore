@@ -1,6 +1,12 @@
 /.idea
 /node_modules
 
+# NW.js runtime downloaded by setup.ps1
+/.nwjs
+
+# portable release build output (build-portable.ps1)
+/dist
+
 # subtitles used for testing
 /test_material
 
@@ -8,3 +14,6 @@
 /plugins
 /*.dll
 /*.dll.manifest
+
+# downloaded release installers
+/lingo-player-*-setup.exe

@@ -25,17 +25,42 @@ Let's say you are learning Spanish:
 - NeDB (https://github.com/louischatriot/nedb)
 - Google Translate (https://translate.google.com/)
 
-## Prerequisites
+## Running locally (Windows)
 
-- [WebChimera.js prerequisites](https://github.com/RSATom/WebChimera.js#build-prerequisites)
+Requirements: [Node.js](https://nodejs.org/) and PowerShell (built into Windows).
 
-## Installation
+```powershell
+.\setup.ps1   # one-time: installs deps + NW.js 0.12.3 runtime + WebChimera/VLC
+.\run.ps1     # launches the app
+```
 
-- ``npm install``
+`setup.ps1` is idempotent — re-run it any time. Everything it downloads
+(the `.nwjs` runtime, `node_modules`) is git-ignored and self-contained in the
+repo, so there are no machine-specific paths to configure.
 
-## Contributing
+Notes:
+- The app pins old, consistent versions (NW.js 0.12.3, WebChimera VLC binding,
+  and a few transitive deps) because it predates modern Node/Chromium.
+- Subtitle auto-download is disabled (the OpenSubtitles XML-RPC API it used was
+  retired in 2024); everything else — playback, dictionary, saved words — works.
 
-Anyone is very welcome to contribute to this project. In case you are interested, contact me at ognjen.apic at gmail.com, or start an issue.
+## Building a portable release (Windows)
+
+After `setup.ps1`, build a self-contained, no-install folder + zip:
+
+```powershell
+.\build-portable.ps1
+```
+
+Output goes to `.\dist\` (git-ignored):
+- `dist\Lingo Player\` — run **`LingoPlayer.exe`** from anywhere, on a clean
+  Win10/11 with nothing installed (bundles Chromium, VLC, and the VC++ 2013 runtime).
+- `dist\Lingo Player Portable.zip` — the distributable.
+
+The launcher is renamed `nw.exe` → `LingoPlayer.exe` by patching the WebChimera
+native module's hard-coded host name (`tools/patch-nw-name.js`) — a plain rename
+would break native-module loading. The folder is the deliverable: NW.js native
+modules require the host to keep a fixed name, so this can't be a single bare .exe.
 
 **Planned features in future (help is welcome):**
 

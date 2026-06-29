@@ -10,6 +10,9 @@ var encodings = require('./js/node/encodings.js');
 var database = require('./js/node/database.js');
 var downloader = require('./js/node/downloader.js');
 
+// dioco-base API (word dictionary translations, replaces Google dict scraping)
+var DICT_API_BASE = 'https://api-cdn-plus.dioco.io';
+
 var gui = require('nw.gui');
 var win = gui.Window.get();
 
@@ -248,43 +251,13 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         $scope.data.dialog = dialogName;
     };
 
+    // scrape the phrase (full-subtitle) translation from the second Google iframe
     $scope.scrapeGoogleTranslateFromIFrame = function(){
         try {
-            var $iframe = $('#iframe');
-            // get translated word
-            var translation = $($($iframe.contents()).find("#result_box")).last().text();
-            var original = $($($iframe.contents()).find("textarea#source")).last().val();
-            // get dictionary table (if hidden, consider it empty)
-            var dict = $($($iframe.contents()).find(".gt-cc-r .gt-cd-c")).last();
-            var table = '';
-            if (dict.is(":visible")){
-                table = dict.html() || '';
-            }
-            // return word definition
-            $scope.data.wordDefinition = {
-                original: original,
-                translation: translation,
-                dictionary: $sce.trustAsHtml(table)
-            };
-
-            // second iframe, for phrases
             var $iframe2 = $('#iframe2');
             $scope.data.phraseTranslation =  $($($iframe2.contents()).find("#result_box")).last().text() || '';
-//            // image:
-//            $('#left').empty();
-//            $($iframe.contents()).find("img:lt(3)").appendTo($('#left'));
-
         } catch(e){
-            // empty it in case of error
-            $scope.data.wordDefinition = {
-                original: '',
-                translation: '',
-                dictionary: $sce.trustAsHtml('')
-            };
-        }
-
-        if(! $scope.data.dialog){
-            $scope.fixPopoverPosition();
+            $scope.data.phraseTranslation = '';
         }
     };
 
@@ -320,21 +293,73 @@ app.controller('mainCtrl', ['$scope', '$interval', '$timeout', '$sce', '$documen
         }
     };
 
-    // translate word
+    function escapeHtml(str){
+        return String(str)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // translate word: fetch translations from dioco-base (Gemini), and load the
+    // word into the hidden Google iframe so the "Listen" TTS keeps working
     $scope.define = function (word, sourceLang, targetLang) {
-        var url = $scope.data.translateUrl = 'https://translate.google.com/#' + sourceLang + '/' + targetLang + '/' + encodeURIComponent(word.text.toLowerCase());
+        if (!word || !word.text) return;
+        var text = word.text.toLowerCase();
+
+        // load word into hidden iframe for TTS playback
+        var url = $scope.data.translateUrl = 'https://translate.google.com/#' + sourceLang + '/' + targetLang + '/' + encodeURIComponent(text);
         $timeout(function(){
             if($scope.data.translateUrl == url){
                 $('#iframe').attr('src', url);
-                $scope.observeIframes();
             }
         }, 150);
 
-//        // get image
-//        request('https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=' + encodeURIComponent(word.text.toLowerCase()), function (error, response, body) {
-//            try {$scope.data.images = JSON.parse(body).responseData.results;}
-//        });
+        // show the word immediately while the translation loads
+        $scope.data.wordDefinition = {
+            original: text,
+            translation: '',
+            dictionary: $sce.trustAsHtml('')
+        };
 
+        // fetch translations from dioco-base
+        var apiUrl = $scope.data.dictUrl = DICT_API_BASE + '/base_dict_getGeminiSimpleTranslations'
+            + '?word=' + encodeURIComponent(text)
+            + '&sl=' + encodeURIComponent(sourceLang)
+            + '&tl=' + encodeURIComponent(targetLang);
+
+        // strictSSL:false: NW.js 0.12.3's io.js ships a 2015 CA bundle that
+        // rejects the dictionary CDN's modern cert chain (SELF_SIGNED_CERT_IN_CHAIN)
+        request({ url: apiUrl, strictSSL: false }, function (error, response, body) {
+            // ignore if a newer lookup has superseded this one
+            if ($scope.data.dictUrl != apiUrl) return;
+
+            var translations = [];
+            try {
+                var parsed = JSON.parse(body);
+                if (parsed && parsed.status === 'success' && Array.isArray(parsed.data)) {
+                    translations = parsed.data;
+                }
+            } catch (e) {}
+
+            // same style as the main translation (bold, centered, 16px),
+            // each subsequent alternative a slightly lighter shade of gray
+            var alternatives = translations.slice(1)
+                .map(function(t, i){
+                    var c = Math.min(45 + i * 45, 130);
+                    return '<div style="text-align:center; font-weight:bold; font-size:16px; color:rgb('
+                        + c + ',' + c + ',' + c + ');">' + escapeHtml(t) + '</div>';
+                }).join('');
+
+            $scope.$apply(function(){
+                $scope.data.wordDefinition = {
+                    original: text,
+                    translation: translations[0] || '',
+                    dictionary: $sce.trustAsHtml(alternatives)
+                };
+                if(! $scope.data.dialog){
+                    $scope.fixPopoverPosition();
+                }
+            });
+        });
     };
     $scope.observeIframes = function() {
         // observe iframe changes by dirty checking (I think there's no event for that)

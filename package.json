@@ -24,16 +24,13 @@
   "dependencies": {
     "file-url": "^1.0.0",
     "iconv-lite": "^0.4.8",
+    "jquery": "2.1.4",
     "jschardet": "^1.1.1",
     "nedb": "^1.1.2",
-    "opensubtitles-api": "^1.3.1",
+    "opensubtitles-api": "^5.1.2",
+    "request": "2.67.0",
     "underscore": "^1.8.3",
-    "wcjs-player": "*"
-  },
-  "devDependencies": {
-    "jasmine-core": "^2.3.4",
-    "karma": "^0.12.36",
-    "karma-jasmine": "^0.3.5",
-    "karma-nodewebkit-launcher": "0.0.12"
+    "wcjs-player": "0.5.2",
+    "wcjs-renderer": "0.1.10"
   }
 }
