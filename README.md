@@ -2,8 +2,8 @@
 
 Open source, cross-platform video player with language learning features.
 
-- Based on VLC player, offers dictionary lookup for subtitles, word pronunciation and word saving features
-- Works with 90 languages (8100 language combinations!), since it's using Google Translate
+- Based on VLC player, offers dictionary lookup for subtitles and word saving features
+- Works with any language pair
 
 To download Windows release go here: http://oaprograms.github.io/lingo-player
 
@@ -38,10 +38,6 @@ Requirements: [Node.js](https://nodejs.org/) and PowerShell (built into Windows)
 (the `.nwjs` runtime, `node_modules`) is git-ignored and self-contained in the
 repo, so there are no machine-specific paths to configure.
 
-Notes:
-- The app pins old, consistent versions (NW.js 0.12.3, WebChimera VLC binding,
-  and a few transitive deps) because it predates modern Node/Chromium.
-
 ## Building a portable release (Windows)
 
 After `setup.ps1`, build a self-contained, no-install folder + zip:
@@ -60,7 +56,7 @@ native module's hard-coded host name (`tools/patch-nw-name.js`) — a plain rena
 would break native-module loading. The folder is the deliverable: NW.js native
 modules require the host to keep a fixed name, so this can't be a single bare .exe.
 
-**Planned features in future (help is welcome):**
+**Planned features in future:**
 
 - Make OSX version
 - Add more dictionary sources
